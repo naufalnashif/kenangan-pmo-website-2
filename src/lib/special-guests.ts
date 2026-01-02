@@ -70,20 +70,20 @@ export const specialGuests: SpecialGuest[] = [
   {
     id: "Mba Sasti",
     name: "Mba Sasti",
-    title: "Rekan di PMOT OJK",
-    personalFarewell: "Terima kasih atas semua kolaborasi dan diskusi kita selama ini. Saya sangat menghargai setiap momen dan pembelajaran yang ada. Sukses selalu, Mba Sasti!"
+    title: "Rekan Senior di PMOT OJK",
+    personalFarewell: "Senior saya yang murah senyum dan baik hati. Terima kasih untuk semua kolaborasi dan diskusinya. Semoga lancar terus di WS Hukum, Mba Sasti!"
   },
   {
     id: "Pa Jo",
     name: "Pa Jo",
-    title: "Rekan di PMOT OJK",
-    personalFarewell: "Terima kasih atas semua kolaborasi dan diskusi kita selama ini. Saya sangat menghargai setiap momen dan pembelajaran yang ada. Sukses selalu, Pa Jo!"
+    title: "Rekan Senior di PMOT OJK",
+    personalFarewell: "Beliau ini seperti ayah sendiri. Baik, murah senyum, teman ngobrol, diskusi, dan bercanda. Terima kasih untuk semua kebaikannya. Sehat selalu, Pa Jo!"
   },
   {
     id: "Pa Iren",
     name: "Pa Iren",
-    title: "Rekan di PMOT OJK",
-    personalFarewell: "Terima kasih atas semua kolaborasi dan diskusi kita selama ini. Saya sangat menghargai setiap momen dan pembelajaran yang ada. Sukses selalu, Pa Iren!"
+    title: "Kepala Unit PMO OJK",
+    personalFarewell: "Terima kasih atas arahan, coaching, dan setiap canda tawanya, Pa. Saya ada tebak-tebakan nih: Kenapa zombie kalau nyerang bareng-bareng? ... Karena kalau sendiri namanya zomblo! Hehe. Sehat dan sukses selalu, Pa!"
   },
   {
     id: "Mas Eko",
@@ -100,19 +100,19 @@ export const specialGuests: SpecialGuest[] = [
   {
     id: "Pa Rifqi",
     name: "Pa Rifqi",
-    title: "Rekan di PMOT OJK",
+    title: "Deputi Direktur di PMOT OJK",
     personalFarewell: "Terima kasih atas semua kolaborasi dan diskusi kita selama ini. Saya sangat menghargai setiap momen dan pembelajaran yang ada. Sukses selalu, Pa Rifqi!"
   },
   {
     id: "Pa Agung",
     name: "Pa Agung",
-    title: "Rekan di PMOT OJK",
+    title: "Deputi Direktur di PMOT OJK",
     personalFarewell: "Terima kasih atas semua kolaborasi dan diskusi kita selama ini. Saya sangat menghargai setiap momen dan pembelajaran yang ada. Sukses selalu, Pa Agung!"
   },
   {
     id: "Pa Riza",
     name: "Pa Riza",
-    title: "Rekan di PMOT OJK",
+    title: "Senior, Atasan di PMOT OJK",
     personalFarewell: "Terima kasih atas semua kolaborasi dan diskusi kita selama ini. Saya sangat menghargai setiap momen dan pembelajaran yang ada. Sukses selalu, Pa Riza!"
   },
   {

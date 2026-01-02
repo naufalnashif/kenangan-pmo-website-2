@@ -67,7 +67,7 @@ export default function GachaButton() {
       </div>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="w-[calc(100%-2rem)] sm:max-w-[425px] rounded-2xl">
           <DialogHeader className="text-center items-center">
             <DialogTitle className="text-2xl font-bold">
                 {isLoading ? 'Mengambil Hadiah...' : 'Selamat! Anda Mendapatkan...'}
