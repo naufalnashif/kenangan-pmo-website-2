@@ -5,12 +5,28 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  guestName?: string;
+}
+
+export default function HeroSection({ guestName }: HeroSectionProps) {
   const heroProfileImage = PlaceHolderImages.find(img => img.id === 'hero-profile');
 
   const scrollToMessage = () => {
     document.getElementById('message')?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  const headlineText = guestName ? (
+    <>
+      See You Later, <br />
+      <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-teal-300">{guestName}.</span>
+    </>
+  ) : (
+    <>
+      See You Later, <br />
+      <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-teal-300">PMO OJK.</span>
+    </>
+  );
 
   return (
     <section id="home" className="relative min-h-screen flex items-center hero-pattern text-white pt-32 sm:pt-40 pb-20 overflow-hidden">
@@ -25,8 +41,7 @@ export default function HeroSection() {
             Final Chapter in OJK
           </div>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-[1.1] mb-8">
-            See You Later, <br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-teal-300">PMO OJK.</span>
+            {headlineText}
           </h1>
           <p className="text-base sm:text-lg text-slate-300 mb-10 leading-relaxed max-w-xl mx-auto lg:mx-0">
             Sebuah kehormatan bisa berkontribusi di Workstream Sistem Informasi. Perjalanan ini resmi berakhir, namun kolaborasi kita akan selalu saya kenang.
@@ -35,9 +50,11 @@ export default function HeroSection() {
             <Button onClick={scrollToMessage} size="lg" className="px-8 py-4 rounded-2xl text-base font-bold hover:scale-105 transition-transform shadow-xl active:scale-95 bg-white text-slate-900 hover:bg-slate-200">
               Buka Pesan
             </Button>
-            <Button asChild variant="secondary" size="lg" className="px-8 py-4 rounded-2xl text-base font-bold hover:scale-105 transition-transform shadow-xl active:scale-95 bg-slate-800/50 text-white border border-slate-700 hover:bg-slate-700">
-              <Link href="#drive">Aset Digital</Link>
-            </Button>
+            {guestName && (
+              <Button asChild variant="secondary" size="lg" className="px-8 py-4 rounded-2xl text-base font-bold hover:scale-105 transition-transform shadow-xl active:scale-95 bg-slate-800/50 text-white border border-slate-700 hover:bg-slate-700">
+                <Link href="#drive">Aset Digital</Link>
+              </Button>
+            )}
           </div>
         </div>
         <div className="flex justify-center order-first lg:order-last">

@@ -8,7 +8,11 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { cn } from '@/lib/utils';
 import { ScrollRevealWrapper } from '../scroll-reveal-wrapper';
 
-export default function FarewellMessage() {
+interface FarewellMessageProps {
+  guestName?: string;
+}
+
+export default function FarewellMessage({ guestName }: FarewellMessageProps) {
   const [isMessageOpen, setIsMessageOpen] = useState(false);
   const logo = PlaceHolderImages.find(img => img.id === 'logo');
 
@@ -22,6 +26,14 @@ export default function FarewellMessage() {
     }
     setIsMessageOpen(!isMessageOpen);
   };
+
+  const personalGreeting = guestName 
+    ? `Dear ${guestName},` 
+    : 'Rekan-rekan PMO OJK yang Luar Biasa,';
+  
+  const personalParagraph = guestName
+    ? 'Terima kasih telah menjadi bagian penting dalam perjalanan saya. Saya sangat menghargai setiap momen dan kolaborasi kita.'
+    : 'Bekerja di Workstream Sistem Informasi bukan hanya tentang angka dan proyek, tapi tentang koneksi dan integritas. Saya berterima kasih atas setiap kesempatan belajar yang diberikan.';
 
   return (
     <ScrollRevealWrapper id="message" className="py-32 bg-background">
@@ -49,7 +61,7 @@ export default function FarewellMessage() {
                   <Mail className="h-10 w-10 text-blue-400" />
                 </div>
                 <h4 className="text-2xl font-bold text-white mb-4">You have a new message</h4>
-                <p className="text-slate-400 mb-8">Klik untuk membuka pesan perpisahan khusus untuk rekan PMO.</p>
+                <p className="text-slate-400 mb-8">Klik untuk membuka pesan perpisahan khusus untuk Anda.</p>
                 <Button onClick={toggleMessage} className="bg-accent text-accent-foreground hover:bg-accent/90">Buka Sekarang</Button>
               </div>
             </div>
@@ -73,8 +85,8 @@ export default function FarewellMessage() {
                 </Button>
               </div>
               <div className="space-y-6 text-justify text-slate-600 dark:text-slate-300">
-                <p className="text-xl font-bold text-foreground mb-6">Rekan-rekan PMO OJK yang Luar Biasa,</p>
-                <p>Bekerja di Workstream Sistem Informasi bukan hanya tentang angka dan proyek, tapi tentang koneksi dan integritas. Saya berterima kasih atas setiap kesempatan belajar yang diberikan.</p>
+                <p className="text-xl font-bold text-foreground mb-6">{personalGreeting}</p>
+                <p>{personalParagraph}</p>
                 <p>Sebagai langkah selanjutnya, saya akan berkarya di dunia konsultansi. Semoga semangat inovasi yang kita bangun di sini terus berkobar di hati rekan-rekan semua.</p>
                 <div className="my-10 p-6 md:p-8 bg-primary/10 rounded-3xl border-l-8 border-primary italic">
                   "Farewell is just a way to say we will miss the presence, but not the memories."

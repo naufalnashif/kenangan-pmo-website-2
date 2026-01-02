@@ -17,41 +17,39 @@ import Portfolio from '@/components/sections/portfolio';
 import { useSearchParams } from 'next/navigation';
 import { specialGuests } from '@/lib/special-guests';
 
-function WelcomeManager() {
+function PageContent() {
   const searchParams = useSearchParams();
-  const guestName = searchParams.get('to');
+  const guestNameParam = searchParams.get('to');
 
-  const isValidGuest = guestName && specialGuests.map(g => g.toLowerCase()).includes(guestName.toLowerCase());
+  const guest = specialGuests.find(g => g.toLowerCase() === guestNameParam?.toLowerCase());
 
-  if (isValidGuest) {
-    // Find the original casing of the name
-    const originalGuestName = specialGuests.find(g => g.toLowerCase() === guestName.toLowerCase());
-    return <WelcomeMessage name={originalGuestName!} />;
-  }
-
-  return null;
+  return (
+    <>
+      <WelcomeMessage name={guest} />
+      <Header />
+      <ScrollingBanner />
+      <main className="flex-grow">
+        <HeroSection guestName={guest} />
+        <FarewellMessage guestName={guest} />
+        <Portfolio />
+        <Guestbook />
+        <MemoriesGallery />
+        <EmoneyGifts />
+        {guest && <DigitalVault />}
+        <AnalyticsDashboard />
+      </main>
+      <Footer />
+      <AudioPlayer />
+    </>
+  );
 }
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
-      <Suspense fallback={<div>Loading...</div>}>
-        <WelcomeManager />
+      <Suspense fallback={<div className="min-h-screen w-full flex items-center justify-center">Loading personal experience...</div>}>
+        <PageContent />
       </Suspense>
-      <Header />
-      <ScrollingBanner />
-      <main className="flex-grow">
-        <HeroSection />
-        <FarewellMessage />
-        <Portfolio />
-        <Guestbook />
-        <MemoriesGallery />
-        <EmoneyGifts />
-        <DigitalVault />
-        <AnalyticsDashboard />
-      </main>
-      <Footer />
-      <AudioPlayer />
     </div>
   );
 }
