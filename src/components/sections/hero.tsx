@@ -5,6 +5,8 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { SpecialGuest } from '@/lib/special-guests';
+import { useTime } from '@/hooks/useTime';
+import { Clock } from 'lucide-react';
 
 interface HeroSectionProps {
   guest?: SpecialGuest;
@@ -12,6 +14,7 @@ interface HeroSectionProps {
 
 export default function HeroSection({ guest }: HeroSectionProps) {
   const heroProfileImage = PlaceHolderImages.find(img => img.id === 'hero-profile');
+  const { timeSinceLastDay } = useTime('2025-12-31T23:59:59');
 
   const scrollToMessage = () => {
     document.getElementById('message')?.scrollIntoView({ behavior: 'smooth' });
@@ -58,7 +61,7 @@ export default function HeroSection({ guest }: HeroSectionProps) {
             )}
           </div>
         </div>
-        <div className="flex justify-center order-first lg:order-last">
+        <div className="flex flex-col items-center justify-center order-first lg:order-last">
           <div className="relative w-full max-w-[320px] sm:max-w-[450px] animate-float">
             <div className="absolute inset-0 bg-primary/20 rounded-[2.5rem] sm:rounded-[3.5rem] blur-3xl opacity-50"></div>
             {heroProfileImage && (
@@ -73,6 +76,13 @@ export default function HeroSection({ guest }: HeroSectionProps) {
               />
             )}
           </div>
+          <div className="mt-8 text-center bg-black/20 backdrop-blur-sm border border-white/10 p-3 rounded-2xl">
+              <p className="text-xs text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                <Clock size={12}/>
+                Waktu Tidak Berjumpa
+              </p>
+              <p className="text-sm font-bold text-slate-200 mt-1">{timeSinceLastDay}</p>
+            </div>
         </div>
       </div>
     </section>

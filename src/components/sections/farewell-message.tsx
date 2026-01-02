@@ -8,6 +8,7 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { cn } from '@/lib/utils';
 import { ScrollRevealWrapper } from '../scroll-reveal-wrapper';
 import { SpecialGuest } from '@/lib/special-guests';
+import { useTime } from '@/hooks/useTime';
 
 interface FarewellMessageProps {
   guest?: SpecialGuest;
@@ -16,6 +17,8 @@ interface FarewellMessageProps {
 export default function FarewellMessage({ guest }: FarewellMessageProps) {
   const [isMessageOpen, setIsMessageOpen] = useState(false);
   const logo = PlaceHolderImages.find(img => img.id === 'logo');
+  const { timeSinceLastDay } = useTime('2025-12-31T23:59:59');
+
 
   const toggleMessage = () => {
     const messageSection = document.getElementById('message');
@@ -89,8 +92,11 @@ export default function FarewellMessage({ guest }: FarewellMessageProps) {
                 <p className="text-xl font-bold text-foreground mb-6">{personalGreeting}</p>
                 <p>{personalParagraph}</p>
                 <p>Sebagai langkah selanjutnya, saya akan berkarya di dunia konsultansi. Semoga semangat inovasi yang kita bangun di sini terus berkobar di hati rekan-rekan semua.</p>
-                <div className="my-10 p-6 md:p-8 bg-primary/10 rounded-3xl border-l-8 border-primary italic">
-                  "Farewell is just a way to say we will miss the presence, but not the memories."
+                <div className="my-10 p-6 md:p-8 bg-primary/10 rounded-3xl border-l-8 border-primary">
+                    <p className='italic'>"Farewell is just a way to say we will miss the presence, but not the memories."</p>
+                    <div className='mt-4 text-xs text-primary/80'>
+                        <p>Sudah {timeSinceLastDay} kita tidak berjumpa.</p>
+                    </div>
                 </div>
                 <p>Tetap sukses, tetap sehat, dan tetaplah menjadi penggerak perubahan.</p>
                 <div className="mt-12 pt-8 border-t">

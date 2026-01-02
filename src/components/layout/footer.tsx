@@ -1,9 +1,13 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { useTime } from '@/hooks/useTime';
 
 export default function Footer() {
   const logo = PlaceHolderImages.find(img => img.id === 'logo');
+  const { currentTime, timeSinceLastDay } = useTime('2025-12-31T23:59:59');
 
   const socialLinks = [
     { href: "https://www.linkedin.com/in/naufalnashif/", label: "LinkedIn" },
@@ -37,7 +41,11 @@ export default function Footer() {
             </Link>
           ))}
         </div>
-        <p className="text-muted-foreground text-sm">&copy; {new Date().getFullYear()} • Designed with heart by Naufal Nashif</p>
+        <div className="text-muted-foreground text-sm space-y-2">
+            <p>Waktu lokal Anda saat ini: {currentTime}</p>
+            <p>Terhitung {timeSinceLastDay} sejak hari terakhir saya.</p>
+            <p>&copy; {new Date().getFullYear()} • Designed with heart by Naufal Nashif</p>
+        </div>
       </div>
     </footer>
   );
