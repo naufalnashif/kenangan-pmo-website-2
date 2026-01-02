@@ -16,7 +16,6 @@ import WelcomeMessage from '@/components/welcome-message';
 import Portfolio from '@/components/sections/portfolio';
 import { useSearchParams } from 'next/navigation';
 import { specialGuests, SpecialGuest } from '@/lib/special-guests';
-import Invitation from '@/components/invitation';
 
 function PageContent() {
   const searchParams = useSearchParams();
@@ -31,7 +30,6 @@ function PageContent() {
       <ScrollingBanner />
       <main className="flex-grow">
         <HeroSection guest={guest} />
-        {!guest && <Invitation />}
         <FarewellMessage guest={guest} />
         <Portfolio />
         <Guestbook />

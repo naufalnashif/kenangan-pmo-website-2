@@ -47,9 +47,18 @@ export default function HeroSection({ guest }: HeroSectionProps) {
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-[1.1] mb-8">
             {headlineText}
           </h1>
-          <p className="text-base sm:text-lg text-slate-300 mb-10 leading-relaxed max-w-xl mx-auto lg:mx-0">
+          <p className="text-base sm:text-lg text-slate-300 mb-6 leading-relaxed max-w-xl mx-auto lg:mx-0">
             Sebuah kehormatan bisa berkontribusi di Workstream Sistem Informasi. Perjalanan ini resmi berakhir, namun kolaborasi kita akan selalu saya kenang.
           </p>
+
+          <div className="mb-10 max-w-md mx-auto lg:mx-0 bg-black/20 backdrop-blur-sm border border-white/10 p-3 rounded-2xl">
+            <p className="text-xs text-slate-400 uppercase tracking-widest flex items-center justify-center lg:justify-start gap-2">
+              <Clock size={12}/>
+              Waktu Tidak Berjumpa
+            </p>
+            <p className="text-sm font-bold text-slate-200 mt-1">{timeSinceLastDay}</p>
+          </div>
+          
           <div className="flex flex-wrap justify-center lg:justify-start gap-4">
             <Button onClick={scrollToMessage} size="lg" className="px-8 py-4 rounded-2xl text-base font-bold hover:scale-105 transition-transform shadow-xl active:scale-95 bg-white text-slate-900 hover:bg-slate-200">
               Buka Pesan
@@ -76,13 +85,6 @@ export default function HeroSection({ guest }: HeroSectionProps) {
               />
             )}
           </div>
-          <div className="mt-8 text-center bg-black/20 backdrop-blur-sm border border-white/10 p-3 rounded-2xl">
-              <p className="text-xs text-slate-400 uppercase tracking-widest flex items-center gap-2">
-                <Clock size={12}/>
-                Waktu Tidak Berjumpa
-              </p>
-              <p className="text-sm font-bold text-slate-200 mt-1">{timeSinceLastDay}</p>
-            </div>
         </div>
       </div>
     </section>

@@ -7,9 +7,9 @@ import { ScrollRevealWrapper } from './scroll-reveal-wrapper';
 export default function Invitation() {
   return (
     <ScrollRevealWrapper className="bg-background">
-      <div className="-mt-16 pb-24">
+      <div className="relative -mt-24 pb-24 z-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <Card className="p-8 sm:p-12 rounded-[2.5rem] bg-gradient-to-br from-primary/10 to-transparent border-2 border-primary/20 shadow-2xl text-center">
+            <Card className="p-8 sm:p-12 rounded-[2.5rem] bg-card/80 backdrop-blur-sm border-2 border-primary/20 shadow-2xl text-center">
                 <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/20 mb-6 border border-primary/30">
                     <QrCode className="h-8 w-8 text-accent" />
                 </div>

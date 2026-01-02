@@ -9,17 +9,20 @@ const emoneyCards = [
   {
     id: "emoney-1",
     alt: "E-money design 1",
-    transformClass: "hover:scale-105"
+    transformClass: "hover:scale-105",
+    label: "Design 1"
   },
   {
     id: "emoney-2",
     alt: "E-money design 2",
-    transformClass: "hover:rotate-2"
+    transformClass: "hover:rotate-2",
+    label: "Design 2"
   },
   {
     id: "emoney-3",
     alt: "E-money design 3",
-    transformClass: "hover:-rotate-2"
+    transformClass: "hover:-rotate-2",
+    label: "Design 3"
   },
 ];
 
@@ -47,9 +50,9 @@ export default function EmoneyGifts() {
                 </Link>
               </Button>
             </div>
-            <div className="flex space-x-4 overflow-x-auto no-scrollbar pb-6 -mx-4 px-4">
+            <div className="flex space-x-6 overflow-x-auto no-scrollbar pb-6 -mx-4 px-4">
               {images.map((card, index) => (
-                <div key={index} className="flex-shrink-0">
+                <div key={index} className="flex-shrink-0 text-center space-y-4">
                   {card.imageUrl && (
                     <Image
                       src={card.imageUrl}
@@ -60,6 +63,7 @@ export default function EmoneyGifts() {
                       data-ai-hint={card.imageHint}
                     />
                   )}
+                  <div className="text-slate-400 text-xs font-bold uppercase tracking-widest">{card.label}</div>
                 </div>
               ))}
             </div>

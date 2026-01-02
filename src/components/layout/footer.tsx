@@ -16,19 +16,19 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="py-24 bg-background border-t">
+    <footer className="py-16 bg-background border-t">
       <div className="max-w-7xl mx-auto px-4 text-center">
         {logo && (
           <Image
             src={logo.imageUrl}
             alt="Logo"
-            width={64}
-            height={64}
-            className="h-16 w-16 mx-auto mb-10"
+            width={48}
+            height={48}
+            className="h-12 w-12 mx-auto mb-8"
             data-ai-hint={logo.imageHint}
           />
         )}
-        <div className="flex justify-center space-x-12 mb-12">
+        <div className="flex justify-center space-x-8 mb-8">
           {socialLinks.map(link => (
             <Link
               key={link.href}
