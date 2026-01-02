@@ -133,4 +133,16 @@ export const specialGuests: SpecialGuest[] = [
     title: "Kepala Bagian di PMOT",
     personalFarewell: "Terima kasih banyak atas kebaikan dan setiap obrolan kita, Mba. Senang bisa mengenal Mba Ode. Sehat dan sukses selalu untuk Mba dan keluarga."
   },
+  {
+    id: "Gigih",
+    name: "Gigih",
+    title: "Rekan di DIPM (PCS 8)",
+    personalFarewell: "Thank you brother, sampai jumpa lagi, semoga sehat dan sukses selalu bray!"
+  },
+  {
+    id: "Mas Ghozy",
+    name: "Mas Ghozy",
+    title: "Rekan Senior di DPEA",
+    personalFarewell: "Makasih mas untuk pertemuan singkat yang berkesan, sampai jumpa lagi, semoga sehat dilancarkan setiap kegiatannya, sukses selalu mas!"
+  },
 ];
