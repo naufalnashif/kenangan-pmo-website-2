@@ -18,6 +18,7 @@ export default function Header() {
   const navLinks = [
     { href: '#home', label: 'Home' },
     { href: '#message', label: 'Pesan' },
+    { href: '#portfolio', label: 'Karya' },
     { href: '#guestbook', label: 'Ucapan' },
     { href: '#memories', label: 'Galeri' },
     { href: '#analytics', label: 'Analytics' },
@@ -33,7 +34,7 @@ export default function Header() {
   return (
     <header className={cn(
       "fixed top-0 w-full z-50 transition-all duration-300",
-      scrolled ? "glass-nav border-b" : "border-b border-transparent"
+      scrolled ? "glass-nav bg-background/95 border-b" : "border-b border-transparent"
     )}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 sm:h-20 items-center">
@@ -48,11 +49,9 @@ export default function Header() {
                 data-ai-hint={logo.imageHint}
               />
             )}
-            {/* <span className="text-lg sm:text-xl font-black tracking-tighter uppercase">NAUFAL NASHIF</span> */}
-            {/* <span className="text-lg sm:text-xl font-black tracking-tighter uppercase dark:text-primary-foreground bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-500 dark:bg-none">NAUFAL NASHIF</span> */}
-            <span className={cn(
-              "text-lg sm:text-xl font-black tracking-tighter uppercase text-white"
-            )}>NAUFAL NASHIF.</span>
+            <span className="text-lg sm:text-xl font-black tracking-tighter uppercase text-white">
+              NAUFAL NASHIF
+            </span>
           </Link>
           
           <nav className="hidden md:flex items-center space-x-8 text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
