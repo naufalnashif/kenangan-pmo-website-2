@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description: 'A farewell message from Naufal Nashif to the PMO OJK team.',
   icons: {
     icon: 'https://raw.githubusercontent.com/naufalnashif/naufalnashif.github.io/main/assets/img/my-logo.png',
+    shortcut: 'https://raw.githubusercontent.com/naufalnashif/naufalnashif.github.io/main/assets/img/my-logo.png',
+    apple: 'https://raw.githubusercontent.com/naufalnashif/naufalnashif.github.io/main/assets/img/my-logo.png',
   },
 };
 
