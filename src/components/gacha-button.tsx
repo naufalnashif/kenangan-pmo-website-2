@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Gift, LoaderCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -15,6 +15,8 @@ import { generateGachaPrize, GachaPrizeOutput } from '@/ai/flows/gacha-flow';
 import { Badge } from './ui/badge';
 import { useToast } from '@/hooks/use-toast';
 
+const DAILY_LIMIT = 5;
+
 type PrizeResult = {
     prize: GachaPrizeOutput;
     imageUrl: string;
@@ -24,21 +26,54 @@ export default function GachaButton() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<PrizeResult | null>(null);
+  const [claimsLeft, setClaimsLeft] = useState(DAILY_LIMIT);
   const { toast } = useToast();
 
+  useEffect(() => {
+    // This effect runs only on the client
+    const today = new Date().toISOString().split('T')[0];
+    const lastClaimStr = localStorage.getItem('gachaLastClaim');
+    const claimsCount = parseInt(localStorage.getItem('gachaClaimsCount') || '0', 10);
+
+    if (lastClaimStr === today) {
+      setClaimsLeft(Math.max(0, DAILY_LIMIT - claimsCount));
+    } else {
+      // It's a new day, reset the counter
+      localStorage.setItem('gachaClaimsCount', '0');
+      localStorage.setItem('gachaLastClaim', today);
+      setClaimsLeft(DAILY_LIMIT);
+    }
+  }, []);
+
   const handleGacha = async () => {
+    if (claimsLeft <= 0) {
+      toast({
+        variant: 'destructive',
+        title: 'Limit Hadiah Harian Tercapai',
+        description: 'Anda telah mencapai batas pengambilan hadiah untuk hari ini. Coba lagi besok ya!',
+      });
+      return;
+    }
+
     setIsLoading(true);
     setResult(null);
     setIsOpen(true);
+    
     try {
       const prizeResult = await generateGachaPrize();
       setResult(prizeResult);
+
+      // Update local storage for rate limiting
+      const currentClaims = parseInt(localStorage.getItem('gachaClaimsCount') || '0', 10) + 1;
+      localStorage.setItem('gachaClaimsCount', currentClaims.toString());
+      setClaimsLeft(DAILY_LIMIT - currentClaims);
+
     } catch (error) {
       console.error('Gacha failed:', error);
       toast({
         variant: 'destructive',
         title: 'Gagal Mendapatkan Hadiah',
-        description: 'Terjadi kesalahan saat mengambil hadiah kejutan. Silakan coba lagi.',
+        description: 'Mesin kejutan sedang sibuk atau kehabisan energi. Silakan coba lagi beberapa saat lagi.',
       });
       setIsOpen(false);
     } finally {
@@ -49,11 +84,11 @@ export default function GachaButton() {
   return (
     <>
       <div className="fixed bottom-6 left-6 z-[60]">
-        <div className="bg-background/80 dark:bg-slate-800/80 backdrop-blur-md p-2 rounded-full shadow-2xl border flex items-center space-x-3 transition-all hover:scale-105">
+        <div className="relative bg-background/80 dark:bg-slate-800/80 backdrop-blur-md p-2 rounded-full shadow-2xl border flex items-center space-x-3 transition-all hover:scale-105">
             <Button
               id="gachaToggle"
               onClick={handleGacha}
-              disabled={isLoading}
+              disabled={isLoading || claimsLeft <= 0}
               size="icon"
               className="w-10 h-10 bg-accent text-accent-foreground rounded-full transition-transform active:scale-90"
             >
@@ -63,6 +98,16 @@ export default function GachaButton() {
             <span className="text-[10px] font-bold pr-3 text-muted-foreground uppercase tracking-widest hidden sm:flex items-center gap-2">
                 Kejutan
             </span>
+            {claimsLeft > 0 && claimsLeft < DAILY_LIMIT && (
+              <div className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-bold">
+                {claimsLeft}
+              </div>
+            )}
+             {claimsLeft <= 0 && (
+              <div className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-destructive-foreground text-xs font-bold">
+                !
+              </div>
+            )}
         </div>
       </div>
 
@@ -86,13 +131,13 @@ export default function GachaButton() {
             )}
             {result && (
               <div className="flex flex-col items-center text-center space-y-4 animate-in fade-in-50 duration-500">
-                <div className="relative w-full max-w-[300px] sm:max-w-sm mx-auto aspect-square rounded-lg overflow-hidden border shadow-lg">
+                <div className="relative w-full max-w-[300px] aspect-[4/3] rounded-lg overflow-hidden border shadow-lg">
                     <Image
                         src={result.imageUrl}
                         alt={result.prize.title}
                         fill
                         className="object-cover"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        sizes="(max-width: 640px) 90vw, 300px"
                     />
                 </div>
                 <div className='w-full'>

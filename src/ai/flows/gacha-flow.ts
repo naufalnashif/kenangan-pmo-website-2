@@ -68,7 +68,7 @@ const generateGachaPrizeFlow = ai.defineFlow(
     // Use a placeholder image service instead of a generative model to avoid billing issues.
     // Use the prize title as a seed for a unique image.
     const seed = prize.title.replace(/\s+/g, '-').toLowerCase();
-    const imageUrl = `https://picsum.photos/seed/${seed}/600/600`;
+    const imageUrl = `https://picsum.photos/seed/${seed}/600/400`;
 
     return {
       prize,
