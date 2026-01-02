@@ -86,7 +86,7 @@ export default function GachaButton() {
             )}
             {result && (
               <div className="flex flex-col items-center text-center space-y-4 animate-in fade-in-50 duration-500">
-                <div className="relative w-full aspect-square max-w-sm rounded-lg overflow-hidden border shadow-lg">
+                <div className="relative w-full max-w-[300px] sm:max-w-sm mx-auto aspect-square rounded-lg overflow-hidden border shadow-lg">
                     <Image
                         src={result.imageUrl}
                         alt={result.prize.title}
