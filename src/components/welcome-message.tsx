@@ -39,19 +39,19 @@ export default function WelcomeMessage({ guest }: WelcomeMessageProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="sm:max-w-[450px] bg-slate-900 border-primary/50 text-white">
+      <DialogContent className="w-[calc(100%-2rem)] sm:max-w-[450px] bg-slate-900 border-primary/50 text-white rounded-2xl sm:rounded-lg">
         <DialogHeader>
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/20 mb-6 border border-primary/30">
+          <div className="mx-auto flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-full bg-primary/20 mb-6 border border-primary/30">
             {isSpecialGuest ? (
-              <Gift className="h-8 w-8 text-accent" />
+              <Gift className="h-7 w-7 sm:h-8 sm:w-8 text-accent" />
             ) : (
-              <QrCode className="h-8 w-8 text-accent" />
+              <QrCode className="h-7 w-7 sm:h-8 sm:w-8 text-accent" />
             )}
           </div>
-          <DialogTitle className="text-center text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-teal-300">
+          <DialogTitle className="text-center text-2xl sm:text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-teal-300">
             {isSpecialGuest ? `Welcome, ${guest.name}!` : 'Selamat Datang!'}
           </DialogTitle>
-          <DialogDescription className="text-center text-slate-400 pt-4 text-base leading-relaxed">
+          <DialogDescription className="text-center text-slate-400 pt-4 text-sm sm:text-base leading-relaxed">
             {isSpecialGuest
               ? 'Terima kasih sudah menjadi bagian dari perjalanan ini. Halaman ini didedikasikan untukmu.'
               : 'Website ini memiliki pengalaman personal yang lebih mendalam. Scan QR code pada kartu e-money Anda untuk mendapatkan akses eksklusif.'
@@ -59,7 +59,7 @@ export default function WelcomeMessage({ guest }: WelcomeMessageProps) {
           </DialogDescription>
         </DialogHeader>
         <div className="py-4">
-          <p className='text-center text-slate-300'>
+          <p className='text-center text-slate-300 text-sm'>
             {isSpecialGuest ? 'Semoga semua kenangan baik kita tetap tersimpan. Enjoy the memories!' : 'Jelajahi kenangan dan pesan yang ada di sini.'}
           </p>
         </div>
