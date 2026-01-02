@@ -8,6 +8,9 @@ import { cn } from '@/lib/utils';
 export const metadata: Metadata = {
   title: 'Farewell Message - Naufal Nashif',
   description: 'A farewell message from Naufal Nashif to the PMO OJK team.',
+  icons: {
+    icon: 'https://raw.githubusercontent.com/naufalnashif/naufalnashif.github.io/main/assets/img/my-logo.png',
+  },
 };
 
 export default function RootLayout({
