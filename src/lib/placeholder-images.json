@@ -1,0 +1,76 @@
+{
+  "placeholderImages": [
+    {
+      "id": "logo",
+      "description": "Naufal Nashif Logo",
+      "imageUrl": "https://raw.githubusercontent.com/naufalnashif/naufalnashif.github.io/main/assets/img/my-logo.png",
+      "imageHint": "company logo"
+    },
+    {
+      "id": "hero-profile",
+      "description": "Main profile picture for the hero section",
+      "imageUrl": "https://raw.githubusercontent.com/naufalnashif/public-assets/main/kenangan-pmo/assets/pmo.png",
+      "imageHint": "profile picture"
+    },
+    {
+      "id": "gallery-wisma",
+      "description": "Wisma Mulia 2 building",
+      "imageUrl": "https://raw.githubusercontent.com/naufalnashif/public-assets/main/kenangan-pmo/assets/gedung-wisma-mulia.png",
+      "imageHint": "office building"
+    },
+    {
+      "id": "gallery-office",
+      "description": "Naufal at the OJK office",
+      "imageUrl": "https://raw.githubusercontent.com/naufalnashif/public-assets/main/kenangan-pmo/assets/ojk-naufal.jpeg",
+      "imageHint": "man office"
+    },
+    {
+      "id": "gallery-malang",
+      "description": "Team trip to Malang",
+      "imageUrl": "https://raw.githubusercontent.com/naufalnashif/public-assets/main/kenangan-pmo/assets/malang.png",
+      "imageHint": "people travel"
+    },
+    {
+      "id": "gallery-belitung",
+      "description": "Island hopping in Belitung",
+      "imageUrl": "https://raw.githubusercontent.com/naufalnashif/public-assets/main/kenangan-pmo/assets/belitung.png",
+      "imageHint": "island beach"
+    },
+    {
+      "id": "gallery-bonding",
+      "description": "Team bonding over a meal",
+      "imageUrl": "https://raw.githubusercontent.com/naufalnashif/public-assets/main/kenangan-pmo/assets/malang-warung-makan.png",
+      "imageHint": "people eating"
+    },
+    {
+      "id": "gallery-casual",
+      "description": "Casual moments at the office",
+      "imageUrl": "https://raw.githubusercontent.com/naufalnashif/public-assets/main/kenangan-pmo/assets/seporsi.png",
+      "imageHint": "casual moment"
+    },
+    {
+      "id": "emoney-1",
+      "description": "E-money card design 1",
+      "imageUrl": "https://raw.githubusercontent.com/naufalnashif/public-assets/main/kenangan-pmo/design_emoneey/Design%201_Depan.png",
+      "imageHint": "card design"
+    },
+    {
+      "id": "emoney-2",
+      "description": "E-money card design 2",
+      "imageUrl": "https://raw.githubusercontent.com/naufalnashif/public-assets/main/kenangan-pmo/design_emoneey/Design%202_Depan.png",
+      "imageHint": "card design"
+    },
+    {
+      "id": "emoney-3",
+      "description": "E-money card design 3",
+      "imageUrl": "https://raw.githubusercontent.com/naufalnashif/public-assets/main/kenangan-pmo/design_emoneey/Design%203_Depan.png",
+      "imageHint": "card design"
+    },
+    {
+      "id": "qr-code",
+      "description": "QR code for Google Drive access",
+      "imageUrl": "https://raw.githubusercontent.com/naufalnashif/public-assets/main/kenangan-pmo/assets/QR%20Code%20Drive.png",
+      "imageHint": "qr code"
+    }
+  ]
+}
