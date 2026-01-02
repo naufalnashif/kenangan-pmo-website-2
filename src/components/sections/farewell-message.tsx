@@ -7,12 +7,13 @@ import { Button } from '@/components/ui/button';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { cn } from '@/lib/utils';
 import { ScrollRevealWrapper } from '../scroll-reveal-wrapper';
+import { SpecialGuest } from '@/lib/special-guests';
 
 interface FarewellMessageProps {
-  guestName?: string;
+  guest?: SpecialGuest;
 }
 
-export default function FarewellMessage({ guestName }: FarewellMessageProps) {
+export default function FarewellMessage({ guest }: FarewellMessageProps) {
   const [isMessageOpen, setIsMessageOpen] = useState(false);
   const logo = PlaceHolderImages.find(img => img.id === 'logo');
 
@@ -27,12 +28,12 @@ export default function FarewellMessage({ guestName }: FarewellMessageProps) {
     setIsMessageOpen(!isMessageOpen);
   };
 
-  const personalGreeting = guestName 
-    ? `Dear ${guestName},` 
+  const personalGreeting = guest 
+    ? `Dear ${guest.name},` 
     : 'Rekan-rekan PMO OJK yang Luar Biasa,';
   
-  const personalParagraph = guestName
-    ? 'Terima kasih telah menjadi bagian penting dalam perjalanan saya. Saya sangat menghargai setiap momen dan kolaborasi kita.'
+  const personalParagraph = guest
+    ? guest.personalFarewell
     : 'Bekerja di Workstream Sistem Informasi bukan hanya tentang angka dan proyek, tapi tentang koneksi dan integritas. Saya berterima kasih atas setiap kesempatan belajar yang diberikan.';
 
   return (

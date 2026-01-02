@@ -75,33 +75,26 @@
     {
       "id": "project-1",
       "description": "Ini adalah projek dalam rangka persiapan peluncuran platform Financial Institutions Directory. Saya berperan untuk melakukan ETL dan membentuk datamart serta membuat dashboard profiling. Terakhir membuat video launching. Klik untuk melihat detail lebih lanjut.",
-      "imageUrl": "https://images.unsplash.com/photo-1641681814042-aaaed4794838?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cHJvamVjdCUyMHNjcmVlbnNob3R8ZW58MHx8fHwxNzY3MzM5MDM1fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "project screenshot"
+      "imageUrl": "https://raw.githubusercontent.com/naufalnashif/public-assets/main/kenangan-pmo/assets/find.png",
+      "imageHint": "data dashboard"
     },
     {
       "id": "project-2",
       "description": "Ini adalah projek remake Dashboard Management Internal meliputi Dashboard HR, Finance, Audit, IKU, dan Procurement. Klik untuk melihat detail lebih lanjut.",
-      "imageUrl": "https://images.unsplash.com/photo-1759536430218-7053ccf40fe9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZGFzaGJvYXJkJTIwY2hhcnR8ZW58MHx8fHwxNzY3MzAxNDQ3fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "dashboard chart"
+      "imageUrl": "https://raw.githubusercontent.com/naufalnashif/public-assets/main/kenangan-pmo/assets/dashboard-mi.png",
+      "imageHint": "management dashboard"
     },
     {
       "id": "project-3",
       "description": "Ini adalah proyek untuk explore possibility penerapan N8N untuk use case OJK",
-      "imageUrl": "https://images.unsplash.com/photo-1601972599720-36938d4ecd31?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bW9iaWxlJTIwYXBwfGVufDB8fHx8MTc2NzI1MzgyNHww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "mobile app"
+      "imageUrl": "https://raw.githubusercontent.com/naufalnashif/public-assets/main/kenangan-pmo/assets/n8n.png",
+      "imageHint": "automation workflow"
     },
     {
       "id": "project-4",
       "description": "Ini adalah proyek untuk memanfaatkan Whisper AI gratis untuk konversi Speech to Text dari rekaman meeting offline",
-      "imageUrl": "https://images.unsplash.com/photo-1601972599720-36938d4ecd31?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bW9iaWxlJTIwYXBwfGVufDB8fHx8MTc2NzI1MzgyNHww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "mobile app"
-    },
-    {
-      "id": "project-5",
-      "description": "Image for Project Gamma",
-      "imageUrl": "https://images.unsplash.com/photo-1601972599720-36938d4ecd31?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bW9iaWxlJTIwYXBwfGVufDB8fHx8MTc2NzI1MzgyNHww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "mobile app"
+      "imageUrl": "https://raw.githubusercontent.com/naufalnashif/public-assets/main/kenangan-pmo/assets/speech-to-text.png",
+      "imageHint": "AI application"
     }
-
   ]
 }

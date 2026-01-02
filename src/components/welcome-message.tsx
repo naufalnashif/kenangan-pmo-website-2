@@ -4,12 +4,13 @@ import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Gift, QrCode } from 'lucide-react';
+import { SpecialGuest } from '@/lib/special-guests';
 
 interface WelcomeMessageProps {
-  name?: string;
+  guest?: SpecialGuest;
 }
 
-export default function WelcomeMessage({ name }: WelcomeMessageProps) {
+export default function WelcomeMessage({ guest }: WelcomeMessageProps) {
   const [isOpen, setIsOpen] = useState(false);
   
   // A state to prevent showing the dialog on subsequent navigations within the app
@@ -34,7 +35,7 @@ export default function WelcomeMessage({ name }: WelcomeMessageProps) {
     setIsOpen(false);
   };
 
-  const isSpecialGuest = !!name;
+  const isSpecialGuest = !!guest;
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -48,7 +49,7 @@ export default function WelcomeMessage({ name }: WelcomeMessageProps) {
             )}
           </div>
           <DialogTitle className="text-center text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-teal-300">
-            {isSpecialGuest ? `Welcome, ${name}!` : 'Selamat Datang!'}
+            {isSpecialGuest ? `Welcome, ${guest.name}!` : 'Selamat Datang!'}
           </DialogTitle>
           <DialogDescription className="text-center text-slate-400 pt-4 text-base leading-relaxed">
             {isSpecialGuest

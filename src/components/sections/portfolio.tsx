@@ -21,7 +21,7 @@ const portfolioItems = [
   },
   {
     id: 'project-2',
-    title: 'Project Remake Dashboard Management Internal OJK',
+    title: 'Remake Dashboard Management Internal OJK',
     description: 'Ini adalah projek remake Dashboard Management Internal meliputi Dashboard HR, Finance, Audit, IKU, dan Procurement. Klik untuk melihat detail lebih lanjut.',
     fileUrl: '#',
     tools: ['Tableau Desktop', 'Tableau Server', 'Oracle', 'SQL'],
@@ -30,7 +30,7 @@ const portfolioItems = [
   {
     id: 'project-3',
     title: 'Explore N8N for AI Automation',
-    description: 'Project Gamma adalah inisiatif terbaru dengan fokus pada pengalaman pengguna.',
+    description: 'Ini adalah proyek untuk explore possibility penerapan N8N untuk use case OJK.',
     fileUrl: 'https://www.linkedin.com/posts/naufalnashif_my-first-ai-agent-project-with-n8n-telegram-activity-7352778399095967744-Whjs?utm_source=share&utm_medium=member_desktop&rcm=ACoAADGpr9kBOaqynHUXP6ekc0wuA9pMiv9Yv4I',
     tools: ['N8N', 'Telegram Bot', 'Javascript', 'AI Agent'],
     duration: '1 Bulan'
@@ -38,12 +38,13 @@ const portfolioItems = [
   {
     id: 'project-4',
     title: 'AI Speech to Text Platform',
-    description: 'Contoh proyek lain untuk mengisi carousel.',
+    description: 'Ini adalah proyek untuk memanfaatkan Whisper AI gratis untuk konversi Speech to Text dari rekaman meeting offline.',
     fileUrl: 'https://www.linkedin.com/posts/naufalnashif_new-project-convert-meeting-audio-into-activity-7352717217693667328--A8i?utm_source=share&utm_medium=member_desktop&rcm=ACoAADGpr9kBOaqynHUXP6ekc0wuA9pMiv9Yv4I',
     tools: ['Python', 'Steamlit', 'Whisper AI'],
     duration: '2 Bulan'
   },
 ];
+
 
 export default function Portfolio() {
   const projects = portfolioItems.map(item => {
@@ -72,7 +73,7 @@ export default function Portfolio() {
           <CarouselContent>
             {projects.map((project, index) => (
               <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                <div className="p-1">
+                <div className="p-1 h-full">
                   <Card className="h-full overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-shadow flex flex-col bg-background">
                     <CardContent className="p-0">
                       <div className="aspect-video overflow-hidden">
@@ -86,8 +87,8 @@ export default function Portfolio() {
                         />
                       </div>
                     </CardContent>
-                    <CardHeader>
-                      <CardTitle>{project.title}</CardTitle>
+                    <CardHeader className="flex-grow">
+                      <CardTitle className="line-clamp-2">{project.title}</CardTitle>
                       <div className="flex items-center text-xs text-muted-foreground pt-2">
                         <Clock className="h-3 w-3 mr-2" />
                         <span>Durasi: {project.duration}</span>
@@ -97,7 +98,7 @@ export default function Portfolio() {
                           <Badge key={tool} variant="secondary" className="text-xs">{tool}</Badge>
                         ))}
                       </div>
-                      <CardDescription className="pt-4 min-h-[60px]">{project.description}</CardDescription>
+                      <CardDescription className="pt-4 h-[80px] line-clamp-4">{project.description}</CardDescription>
                     </CardHeader>
                     <CardFooter className="mt-auto bg-background/50 p-4">
                       <Button asChild className="w-full rounded-xl">

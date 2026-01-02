@@ -4,22 +4,23 @@ import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { SpecialGuest } from '@/lib/special-guests';
 
 interface HeroSectionProps {
-  guestName?: string;
+  guest?: SpecialGuest;
 }
 
-export default function HeroSection({ guestName }: HeroSectionProps) {
+export default function HeroSection({ guest }: HeroSectionProps) {
   const heroProfileImage = PlaceHolderImages.find(img => img.id === 'hero-profile');
 
   const scrollToMessage = () => {
     document.getElementById('message')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const headlineText = guestName ? (
+  const headlineText = guest ? (
     <>
       See You Later, <br />
-      <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-teal-300">{guestName}.</span>
+      <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-teal-300">{guest.name}.</span>
     </>
   ) : (
     <>
@@ -38,7 +39,7 @@ export default function HeroSection({ guestName }: HeroSectionProps) {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 sm:gap-16 items-center z-10">
         <div className="text-center lg:text-left">
           <div className="inline-block px-4 py-1.5 rounded-full bg-blue-500/20 border border-blue-500/30 text-blue-400 text-[10px] font-black uppercase tracking-[0.2em] mb-6">
-            Final Chapter in OJK
+            {guest ? guest.title : 'Final Chapter in OJK'}
           </div>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-[1.1] mb-8">
             {headlineText}
@@ -50,7 +51,7 @@ export default function HeroSection({ guestName }: HeroSectionProps) {
             <Button onClick={scrollToMessage} size="lg" className="px-8 py-4 rounded-2xl text-base font-bold hover:scale-105 transition-transform shadow-xl active:scale-95 bg-white text-slate-900 hover:bg-slate-200">
               Buka Pesan
             </Button>
-            {guestName && (
+            {guest && (
               <Button asChild variant="secondary" size="lg" className="px-8 py-4 rounded-2xl text-base font-bold hover:scale-105 transition-transform shadow-xl active:scale-95 bg-slate-800/50 text-white border border-slate-700 hover:bg-slate-700">
                 <Link href="#drive">Aset Digital</Link>
               </Button>

@@ -15,22 +15,22 @@ import AnalyticsDashboard from "@/components/analytics-dashboard";
 import WelcomeMessage from '@/components/welcome-message';
 import Portfolio from '@/components/sections/portfolio';
 import { useSearchParams } from 'next/navigation';
-import { specialGuests } from '@/lib/special-guests';
+import { specialGuests, SpecialGuest } from '@/lib/special-guests';
 
 function PageContent() {
   const searchParams = useSearchParams();
   const guestNameParam = searchParams.get('to');
 
-  const guest = specialGuests.find(g => g.toLowerCase() === guestNameParam?.toLowerCase());
+  const guest: SpecialGuest | undefined = specialGuests.find(g => g.id.toLowerCase() === guestNameParam?.toLowerCase());
 
   return (
     <>
-      <WelcomeMessage name={guest} />
+      <WelcomeMessage guest={guest} />
       <Header />
       <ScrollingBanner />
       <main className="flex-grow">
-        <HeroSection guestName={guest} />
-        <FarewellMessage guestName={guest} />
+        <HeroSection guest={guest} />
+        <FarewellMessage guest={guest} />
         <Portfolio />
         <Guestbook />
         <MemoriesGallery />
