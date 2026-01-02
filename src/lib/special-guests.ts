@@ -40,25 +40,25 @@ export const specialGuests: SpecialGuest[] = [
   {
     id: "Mba Susi",
     name: "Mba Susi",
-    title: "Rekan Senior di PMOT OJK",
+    title: "Rekan, Senior di PMOT OJK",
     personalFarewell: "Terima kasih untuk setiap obrolan dan sharingnya, Mba. Selalu menyenangkan bisa berdiskusi banyak hal. Sehat dan sukses selalu, Mba Susi!"
   },
   {
     id: "Mba Dewi",
     name: "Mba Dewi",
-    title: "Rekan di PMOT OJK",
+    title: "Rekan, Senior di PMOT OJK",
     personalFarewell: "Walaupun Mba Dewi baru bergabung, senang bisa kenal dan ngobrol banyak akhir-akhir ini. Semoga sukses selalu di PMOT OJK, Mba!"
   },
   {
     id: "Mas Rudi",
     name: "Mas Rudi",
-    title: "Rekan di PMOT OJK",
+    title: "Rekan, Senior di PMOT OJK",
     personalFarewell: "Walaupun Mas Rudi baru bergabung, senang bisa kenal dan ngobrol banyak akhir-akhir ini. Semoga sukses selalu di PMOT OJK, Mas!"
   },
   {
     id: "Mas Aqsa",
     name: "Mas Aqsa",
-    title: "Rekan di PMOT OJK",
+    title: "Rekan, Senior di PMOT OJK",
     personalFarewell: "Terima kasih untuk bantuannya selama ini, terutama urusan payroll dan anggaran. Sukses di tempat barunya di OJK Institute, Mas!"
   },
   {
@@ -70,13 +70,13 @@ export const specialGuests: SpecialGuest[] = [
   {
     id: "Mba Sasti",
     name: "Mba Sasti",
-    title: "Rekan Senior di PMOT OJK",
+    title: "Atasan, Senior di PMOT OJK",
     personalFarewell: "Senior saya yang murah senyum dan baik hati. Terima kasih untuk semua kolaborasi dan diskusinya. Semoga lancar terus di WS Hukum, Mba Sasti!"
   },
   {
     id: "Pa Jo",
     name: "Pa Jo",
-    title: "Rekan Senior di PMOT OJK",
+    title: "Atasan, Senior di PMOT OJK",
     personalFarewell: "Beliau ini seperti ayah sendiri. Baik, murah senyum, teman ngobrol, diskusi, dan bercanda. Terima kasih untuk semua kebaikannya. Sehat selalu, Pa Jo!"
   },
   {
@@ -88,7 +88,7 @@ export const specialGuests: SpecialGuest[] = [
   {
     id: "Mas Eko",
     name: "Mas Eko",
-    title: "Rekan Senior di PMOT OJK",
+    title: "Atasan, Senior di PMOT OJK",
     personalFarewell: "Terima kasih untuk semua diskusi dan kerjasamanya, Mas. Selamat dan sukses untuk peran barunya sebagai kepala kantor OJK di Belitung!"
   },
   {
@@ -112,7 +112,7 @@ export const specialGuests: SpecialGuest[] = [
   {
     id: "Pa Riza",
     name: "Pa Riza",
-    title: "Senior, Atasan di PMOT OJK",
+    title: "Atasan, Senior di PMOT OJK",
     personalFarewell: "Terima kasih atas semua kolaborasi dan diskusi kita selama ini. Saya sangat menghargai setiap momen dan pembelajaran yang ada. Sukses selalu, Pa Riza!"
   },
   {
