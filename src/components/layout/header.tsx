@@ -48,7 +48,11 @@ export default function Header() {
                 data-ai-hint={logo.imageHint}
               />
             )}
-            <span className="text-lg sm:text-xl font-black tracking-tighter uppercase">NAUFAL NASHIF</span>
+            {/* <span className="text-lg sm:text-xl font-black tracking-tighter uppercase">NAUFAL NASHIF</span> */}
+            {/* <span className="text-lg sm:text-xl font-black tracking-tighter uppercase dark:text-primary-foreground bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-500 dark:bg-none">NAUFAL NASHIF</span> */}
+            <span className={cn(
+              "text-lg sm:text-xl font-black tracking-tighter uppercase text-white"
+            )}>NAUFAL NASHIF.</span>
           </Link>
           
           <nav className="hidden md:flex items-center space-x-8 text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
