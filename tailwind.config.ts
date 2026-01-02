@@ -93,8 +93,9 @@ export default {
           to: { transform: 'translateX(-100%)' },
         },
         'float': {
-          '0%, 100%': { transform: 'translateY(0)' },
+          '0%': { transform: 'translateY(0px)' },
           '50%': { transform: 'translateY(-20px)' },
+          '100%': { transform: 'translateY(0px)' },
         },
       },
       animation: {
@@ -102,6 +103,7 @@ export default {
         'accordion-up': 'accordion-up 0.2s ease-out',
         'infinite-scroll': 'infinite-scroll 25s linear infinite',
         'float': 'float 6s ease-in-out infinite',
+        'snowfall': 'snowfall 10s linear infinite',
       },
     },
   },

@@ -16,6 +16,9 @@ import WelcomeMessage from '@/components/welcome-message';
 import Portfolio from '@/components/sections/portfolio';
 import { useSearchParams } from 'next/navigation';
 import { specialGuests, SpecialGuest } from '@/lib/special-guests';
+import GachaButton from '@/components/gacha-button';
+import SeasonalEffects from '@/components/seasonal-effects';
+
 
 function PageContent() {
   const searchParams = useSearchParams();
@@ -25,6 +28,7 @@ function PageContent() {
 
   return (
     <>
+      <SeasonalEffects />
       <WelcomeMessage guest={guest} />
       <Header />
       <ScrollingBanner />
@@ -39,6 +43,7 @@ function PageContent() {
         <AnalyticsDashboard />
       </main>
       <Footer />
+      <GachaButton />
       <AudioPlayer />
     </>
   );
