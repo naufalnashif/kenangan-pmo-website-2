@@ -16,8 +16,9 @@ import { Badge } from './ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { v4 as uuidv4 } from 'uuid'; // For generating unique user ID
 import { cn } from '@/lib/utils';
+import { RarityBadge } from './rarity-badge';
 
-type PrizeResult = {
+export type PrizeResult = {
     prize: GachaPrizeOutput;
     imageUrl: string;
     isAiGenerated?: boolean;
@@ -34,18 +35,27 @@ const getUserId = () => {
 };
 
 
-const RarityBadge = ({ rarity }: { rarity: 'Common' | 'Rare' | 'Epic' | 'Super Epic' }) => {
-    const rarityStyles = {
-        Common: 'bg-slate-200 text-slate-700 border-slate-300',
-        Rare: 'bg-blue-100 text-blue-800 border-blue-300',
-        Epic: 'bg-gradient-to-r from-purple-200 to-pink-200 text-purple-900 border-purple-300',
-        'Super Epic': 'bg-gradient-to-r from-yellow-300 via-amber-400 to-orange-500 text-white border-amber-500 shadow-lg',
-    };
-    return (
-        <Badge className={cn("capitalize", rarityStyles[rarity])}>
-            {rarity}
-        </Badge>
-    );
+// Function to save prize to collection
+const saveToCollection = (prizeResult: PrizeResult) => {
+  if (typeof window === 'undefined') return;
+  try {
+    const collectionJSON = localStorage.getItem('gachaCollection');
+    let collection: PrizeResult[] = collectionJSON ? JSON.parse(collectionJSON) : [];
+    
+    // Add the new prize to the start of the array
+    collection.unshift(prizeResult);
+
+    // Keep only the last 5 prizes
+    if (collection.length > 5) {
+      collection = collection.slice(0, 5);
+    }
+
+    localStorage.setItem('gachaCollection', JSON.stringify(collection));
+    // Dispatch a custom event to notify the collection component
+    window.dispatchEvent(new CustomEvent('collectionUpdated'));
+  } catch (error) {
+    console.error("Failed to save prize to collection:", error);
+  }
 };
 
 
@@ -70,6 +80,18 @@ export default function GachaButton() {
         });
         return;
     }
+    
+    // Check if collection is full
+    const collectionJSON = localStorage.getItem('gachaCollection');
+    const collection: PrizeResult[] = collectionJSON ? JSON.parse(collectionJSON) : [];
+    if (collection.length >= 5) {
+      toast({
+        variant: 'destructive',
+        title: 'Koleksi Penuh!',
+        description: 'Hapus beberapa hadiah dari koleksi untuk mendapatkan yang baru.',
+      });
+      return;
+    }
 
     setIsLoading(true);
     setResult(null);
@@ -89,11 +111,14 @@ export default function GachaButton() {
          return;
       }
       
-      setResult({ 
+      const prizeResult = { 
         prize: response.prize, 
         imageUrl: response.imageUrl,
         isAiGenerated: response.isAiGenerated 
-      });
+      };
+
+      setResult(prizeResult);
+      saveToCollection(prizeResult);
 
     } catch (error: any) {
       console.error('Gacha failed:', error);
@@ -122,25 +147,23 @@ export default function GachaButton() {
 
   return (
     <>
-      <div className="fixed bottom-6 left-6 z-[60]">
-        <div className="relative group">
-            <Button
-              id="gachaToggle"
-              onClick={handleGacha}
-              disabled={isLoading}
-              size="icon"
-              className="w-14 h-14 bg-accent text-accent-foreground rounded-full transition-transform active:scale-90 shadow-lg group-hover:scale-110 animate-pulse-shadow"
-            >
-              {isLoading ? <LoaderCircle className="h-6 w-6 animate-spin" /> : <Gift className="h-6 w-6" />}
-              <span className="sr-only">Hadiah Kejutan</span>
-            </Button>
-             <span className="absolute -top-1 -right-1 flex h-5 w-5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-5 w-5 bg-primary p-1 items-center justify-center text-white text-[8px] font-bold">
-                    BARU
-                </span>
-            </span>
-        </div>
+      <div className="relative group">
+          <Button
+            id="gachaToggle"
+            onClick={handleGacha}
+            disabled={isLoading}
+            size="icon"
+            className="w-14 h-14 bg-accent text-accent-foreground rounded-full transition-transform active:scale-90 shadow-lg group-hover:scale-110 animate-pulse-shadow"
+          >
+            {isLoading ? <LoaderCircle className="h-6 w-6 animate-spin" /> : <Gift className="h-6 w-6" />}
+            <span className="sr-only">Hadiah Kejutan</span>
+          </Button>
+            <span className="absolute -top-1 -right-1 flex h-5 w-5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-5 w-5 bg-primary p-1 items-center justify-center text-white text-[8px] font-bold">
+                  BARU
+              </span>
+          </span>
       </div>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>

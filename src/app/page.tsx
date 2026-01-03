@@ -18,6 +18,7 @@ import { useSearchParams } from 'next/navigation';
 import { specialGuests, SpecialGuest } from '@/lib/special-guests';
 import GachaButton from '@/components/gacha-button';
 import SeasonalEffects from '@/components/seasonal-effects';
+import GachaCollection from '@/components/gacha-collection';
 
 
 function PageContent() {
@@ -34,8 +35,8 @@ function PageContent() {
       <ScrollingBanner />
       <main className="flex-grow">
         <HeroSection guest={guest} />
-        <FarewellMessage guest={guest} />
         <Portfolio />
+        <FarewellMessage guest={guest} />
         <MemoriesGallery />
         <EmoneyGifts />
         {guest && <DigitalVault />}
@@ -43,7 +44,10 @@ function PageContent() {
         <AnalyticsDashboard />
       </main>
       <Footer />
-      <GachaButton />
+      <div className="fixed bottom-6 left-6 z-[60] flex items-end gap-4">
+        <GachaCollection />
+        <GachaButton />
+      </div>
       <AudioPlayer />
     </>
   );
