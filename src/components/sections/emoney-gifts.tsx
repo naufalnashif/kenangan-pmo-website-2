@@ -33,7 +33,7 @@ export default function EmoneyGifts() {
   });
 
   return (
-    <ScrollRevealWrapper id="emooney" className="py-32 bg-background">
+    <ScrollRevealWrapper id="emooney" className="py-32 bg-secondary/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-slate-900 rounded-[4rem] p-12 md:p-20 relative overflow-hidden shadow-2xl">
           <div className="absolute -top-20 -right-20 w-80 h-80 bg-primary/20 rounded-full filter blur-[100px]"></div>

@@ -29,7 +29,7 @@ service cloud.firestore {
       allow create: if true;
     }
     
-    // Gacha Claims: Only allow creation. The userId must match the one in the document.
+    // Gacha Claims: Only allow creation. The userId must be a string.
     // Deny all reads, updates, and deletes from the client. This collection is managed by server-side flow.
     match /gacha_claims/{claimId} {
        allow create: if request.resource.data.userId is string;

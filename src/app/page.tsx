@@ -34,8 +34,8 @@ function PageContent() {
       <ScrollingBanner />
       <main className="flex-grow">
         <HeroSection guest={guest} />
-        <Portfolio />
         <FarewellMessage guest={guest} />
+        <Portfolio />
         <MemoriesGallery />
         <EmoneyGifts />
         {guest && <DigitalVault />}
