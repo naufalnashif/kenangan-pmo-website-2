@@ -34,12 +34,12 @@ function PageContent() {
       <ScrollingBanner />
       <main className="flex-grow">
         <HeroSection guest={guest} />
-        <FarewellMessage guest={guest} />
         <Portfolio />
-        <Guestbook />
+        <FarewellMessage guest={guest} />
         <MemoriesGallery />
         <EmoneyGifts />
         {guest && <DigitalVault />}
+        <Guestbook />
         <AnalyticsDashboard />
       </main>
       <Footer />

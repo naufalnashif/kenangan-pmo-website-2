@@ -14,45 +14,44 @@ import {
 import { generateGachaPrize, GachaPrizeOutput } from '@/ai/flows/gacha-flow';
 import { Badge } from './ui/badge';
 import { useToast } from '@/hooks/use-toast';
-
-const DAILY_LIMIT = 5;
+import { v4 as uuidv4 } from 'uuid'; // For generating unique user ID
 
 type PrizeResult = {
     prize: GachaPrizeOutput;
     imageUrl: string;
 }
 
+// Function to get or create a unique user ID
+const getUserId = () => {
+  let userId = localStorage.getItem('anonymousUserId');
+  if (!userId) {
+    userId = uuidv4();
+    localStorage.setItem('anonymousUserId', userId);
+  }
+  return userId;
+};
+
+
 export default function GachaButton() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<PrizeResult | null>(null);
-  const [claimsLeft, setClaimsLeft] = useState(DAILY_LIMIT);
+  const [userId, setUserId] = useState<string | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
     // This effect runs only on the client
-    const today = new Date().toISOString().split('T')[0];
-    const lastClaimStr = localStorage.getItem('gachaLastClaim');
-    const claimsCount = parseInt(localStorage.getItem('gachaClaimsCount') || '0', 10);
-
-    if (lastClaimStr === today) {
-      setClaimsLeft(Math.max(0, DAILY_LIMIT - claimsCount));
-    } else {
-      // It's a new day, reset the counter
-      localStorage.setItem('gachaClaimsCount', '0');
-      localStorage.setItem('gachaLastClaim', today);
-      setClaimsLeft(DAILY_LIMIT);
-    }
+    setUserId(getUserId());
   }, []);
 
   const handleGacha = async () => {
-    if (claimsLeft <= 0) {
-      toast({
-        variant: 'destructive',
-        title: 'Limit Hadiah Harian Tercapai',
-        description: 'Anda telah mencapai batas pengambilan hadiah untuk hari ini. Coba lagi besok ya!',
-      });
-      return;
+    if (!userId) {
+        toast({
+            variant: 'destructive',
+            title: 'Gagal Mengidentifikasi Anda',
+            description: 'Mohon refresh halaman dan coba lagi.',
+        });
+        return;
     }
 
     setIsLoading(true);
@@ -60,20 +59,26 @@ export default function GachaButton() {
     setIsOpen(true);
     
     try {
-      const prizeResult = await generateGachaPrize();
-      setResult(prizeResult);
+      const response = await generateGachaPrize({ userId });
+      
+      if (response.error || !response.prize || !response.imageUrl) {
+         toast({
+            variant: 'destructive',
+            title: 'Gagal Mengambil Hadiah',
+            description: response.error || 'Mesin kejutan sedang bermasalah.',
+         });
+         setIsOpen(false);
+         return;
+      }
+      
+      setResult({ prize: response.prize, imageUrl: response.imageUrl });
 
-      // Update local storage for rate limiting
-      const currentClaims = parseInt(localStorage.getItem('gachaClaimsCount') || '0', 10) + 1;
-      localStorage.setItem('gachaClaimsCount', currentClaims.toString());
-      setClaimsLeft(DAILY_LIMIT - currentClaims);
-
-    } catch (error) {
+    } catch (error: any) {
       console.error('Gacha failed:', error);
       toast({
         variant: 'destructive',
         title: 'Gagal Mendapatkan Hadiah',
-        description: 'Mesin kejutan sedang sibuk atau kehabisan energi. Silakan coba lagi beberapa saat lagi.',
+        description: error.message || 'Mesin kejutan sedang sibuk. Silakan coba lagi beberapa saat lagi.',
       });
       setIsOpen(false);
     } finally {
@@ -88,7 +93,7 @@ export default function GachaButton() {
             <Button
               id="gachaToggle"
               onClick={handleGacha}
-              disabled={isLoading || claimsLeft <= 0}
+              disabled={isLoading}
               size="icon"
               className="w-10 h-10 bg-accent text-accent-foreground rounded-full transition-transform active:scale-90"
             >
@@ -98,16 +103,6 @@ export default function GachaButton() {
             <span className="text-[10px] font-bold pr-3 text-muted-foreground uppercase tracking-widest hidden sm:flex items-center gap-2">
                 Kejutan
             </span>
-            {claimsLeft > 0 && claimsLeft < DAILY_LIMIT && (
-              <div className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-bold">
-                {claimsLeft}
-              </div>
-            )}
-             {claimsLeft <= 0 && (
-              <div className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-destructive-foreground text-xs font-bold">
-                !
-              </div>
-            )}
         </div>
       </div>
 
@@ -126,7 +121,7 @@ export default function GachaButton() {
             {isLoading && (
               <div className="flex flex-col items-center justify-center space-y-4 h-64">
                 <LoaderCircle className="w-12 h-12 animate-spin text-primary" />
-                <p className="text-muted-foreground">Menghasilkan teks unik...</p>
+                <p className="text-muted-foreground">Menghubungi mesin kejutan...</p>
               </div>
             )}
             {result && (

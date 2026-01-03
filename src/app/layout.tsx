@@ -4,14 +4,15 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from "@/components/ui/toaster";
 import VisitorTracker from '@/components/visitor-tracker';
 import { cn } from '@/lib/utils';
+import { FirebaseErrorListener } from '@/components/FirebaseErrorListener';
 
 export const metadata: Metadata = {
   title: 'Farewell Message - Naufal Nashif',
   description: 'A farewell message from Naufal Nashif to the PMO OJK team.',
   icons: {
-    icon: 'https://raw.githubusercontent.com/naufalnashif/naufalnashif.github.io/main/assets/img/my-logo.png',
-    shortcut: 'https://raw.githubusercontent.com/naufalnashif/naufalnashif.github.io/main/assets/img/my-logo.png',
-    apple: 'https://raw.githubusercontent.com/naufalnashif/naufalnashif.github.io/main/assets/img/my-logo.png',
+    icon: 'https://raw.githubusercontent.com/naufalnashif/naufalnashif.github.io/main/assets/img/my-logo.png?v=2',
+    shortcut: 'https://raw.githubusercontent.com/naufalnashif/naufalnashif.github.io/main/assets/img/my-logo.png?v=2',
+    apple: 'https://raw.githubusercontent.com/naufalnashif/naufalnashif.github.io/main/assets/img/my-logo.png?v=2',
   },
 };
 
@@ -29,6 +30,7 @@ export default function RootLayout({
       </head>
       <body className={cn("font-body antialiased custom-scrollbar")}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          {process.env.NODE_ENV === 'development' && <FirebaseErrorListener />}
           <VisitorTracker />
           {children}
           <Toaster />

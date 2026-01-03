@@ -79,7 +79,7 @@ export default function AnalyticsDashboard() {
       setError(null);
     }, (err) => {
       console.error("Error fetching analytics: ", err);
-      setError("Could not load analytics. Please ensure Firestore is set up correctly and you have permission to read the 'visits' collection.");
+      setError("Tidak dapat memuat analitik. Pastikan Firestore telah di-setup dengan benar dan Anda memiliki izin untuk membaca koleksi 'visits'.");
     });
 
     return () => unsubscribe();
@@ -139,7 +139,7 @@ export default function AnalyticsDashboard() {
 
 
   return (
-    <ScrollRevealWrapper id="analytics" className="py-32 bg-background">
+    <ScrollRevealWrapper id="analytics" className="py-32 bg-secondary/50">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>
           <CollapsibleTrigger asChild>
@@ -154,7 +154,7 @@ export default function AnalyticsDashboard() {
             </div>
           </CollapsibleTrigger>
           <CollapsibleContent className="space-y-4 pt-12">
-            <p className="text-muted-foreground">Real-time analytics for your farewell page.</p>
+            <p className="text-muted-foreground max-w-2xl">Analitik real-time untuk halaman perpisahan ini. Data diperbarui secara langsung dari Firestore.</p>
             
             {error && (
               <div className="bg-destructive/10 border border-destructive/20 text-destructive p-4 rounded-lg">
@@ -165,22 +165,22 @@ export default function AnalyticsDashboard() {
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Total Visits</CardTitle>
+                  <CardTitle className="text-sm font-medium">Total Kunjungan</CardTitle>
                   <Eye className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">{data ? formattedTotalVisits : "..."}</div>
-                  <p className="text-xs text-muted-foreground">Total number of times the page has been loaded.</p>
+                  <p className="text-xs text-muted-foreground">Jumlah total halaman dimuat.</p>
                 </CardContent>
               </Card>
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Unique Visitors (Estimated)</CardTitle>
+                  <CardTitle className="text-sm font-medium">Pengunjung Unik</CardTitle>
                   <Users className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">{data ? formattedUniqueVisitors : "..."}</div>
-                  <p className="text-xs text-muted-foreground">Based on unique browser signatures.</p>
+                  <p className="text-xs text-muted-foreground">Estimasi berdasarkan browser.</p>
                 </CardContent>
               </Card>
               <Card>
@@ -193,14 +193,14 @@ export default function AnalyticsDashboard() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">Live</div>
-                  <p className="text-xs text-muted-foreground">Data is updated in real-time from Firestore.</p>
+                  <p className="text-xs text-muted-foreground">Data diperbarui secara langsung.</p>
                 </CardContent>
               </Card>
             </div>
 
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2"><BarChart2 className="h-5 w-5"/> Visits Over Last 7 Days</CardTitle>
+                <CardTitle className="flex items-center gap-2"><BarChart2 className="h-5 w-5"/> Kunjungan 7 Hari Terakhir</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="h-[350px]">
@@ -222,13 +222,13 @@ export default function AnalyticsDashboard() {
                           axisLine={false}
                           allowDecimals={false}
                         />
-                        <Tooltip content={<CustomTooltip />} cursor={{fill: 'hsl(var(--background))'}}/>
+                        <Tooltip content={<CustomTooltip />} cursor={{fill: 'hsl(var(--accent) / 0.1)'}}/>
                         <Bar dataKey="visits" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
                       </BarChart>
                     </ResponsiveContainer>
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                      {isOpen ? "Loading chart data..." : "Open to view analytics"}
+                      {isOpen ? "Memuat data grafik..." : "Buka untuk melihat analitik"}
                     </div>
                   )}
                 </div>

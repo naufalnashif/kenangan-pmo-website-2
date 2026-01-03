@@ -1,15 +1,39 @@
 rules_version = '2';
+
+// Helper function to check if a user is authenticated
+function isSignedIn() {
+  return request.auth != null;
+}
+
+// Helper function to check rate limits
+function isRateLimited(collectionName, intervalSeconds, maxCount) {
+    // Get all documents for the current user in the last `intervalSeconds`
+    let previousDocs = firestore.get(/databases/$(database)/documents/$(collectionName)/).where('userId', '==', request.auth.uid).where('timestamp', '>', request.time - duration.time(0, 0, intervalSeconds, 0, 0));
+    return previousDocs.size() < maxCount;
+}
+
+
 service cloud.firestore {
   match /databases/{database}/documents {
+    // Guestbook: Allow anyone to read. Allow creation but with a rate limit. No updates/deletes.
     match /guestbook/{documentId} {
       allow read: if true;
-      allow create: if true;
+      // Allow creation only if the user submits less than 5 messages per hour.
+      allow create: if isRateLimited('guestbook', 3600, 5); 
       allow update, delete: if false;
     }
+    
+    // Visits: Allow anyone to create. Deny all reads, updates, and deletes.
     match /visits/{documentId} {
-      allow read: if true;
+      allow read, update, delete: if false;
       allow create: if true;
-      allow update, delete: if false;
+    }
+    
+    // Gacha Claims: Only allow creation. The userId must match the one in the document.
+    // Deny all reads, updates, and deletes from the client. This collection is managed by server-side flow.
+    match /gacha_claims/{claimId} {
+       allow create: if request.resource.data.userId is string;
+       allow read, update, delete: if false;
     }
   }
 }

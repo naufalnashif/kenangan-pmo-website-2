@@ -53,7 +53,7 @@ export default function Portfolio() {
   });
 
   return (
-    <ScrollRevealWrapper id="portfolio" className="py-32 bg-secondary/50">
+    <ScrollRevealWrapper id="portfolio" className="py-32 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-primary font-bold uppercase tracking-widest text-sm mb-3">Portfolio</h2>
@@ -74,7 +74,7 @@ export default function Portfolio() {
             {projects.map((project, index) => (
               <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                 <div className="p-1 h-full">
-                  <Card className="h-full overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-shadow flex flex-col bg-background">
+                  <Card className="h-full overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-shadow flex flex-col bg-card">
                     <CardContent className="p-0">
                       <div className="aspect-video overflow-hidden">
                         <Image 
@@ -100,7 +100,7 @@ export default function Portfolio() {
                       </div>
                       <CardDescription className="pt-4 h-[80px] line-clamp-4">{project.description}</CardDescription>
                     </CardHeader>
-                    <CardFooter className="mt-auto bg-background/50 p-4">
+                    <CardFooter className="mt-auto bg-card p-4">
                       <Button asChild className="w-full rounded-xl">
                         <Link href={project.fileUrl} target="_blank">
                           <span>Lihat Detail</span>

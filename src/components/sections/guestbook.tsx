@@ -8,15 +8,18 @@ import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, Timest
 import { db } from '@/lib/firebase';
 import { formatDistanceToNow } from 'date-fns';
 import { id } from 'date-fns/locale';
+import { cn } from '@/lib/utils';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Card, CardContent } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { useToast } from '@/hooks/use-toast';
 import { ScrollRevealWrapper } from '../scroll-reveal-wrapper';
-import { Send, MessageSquare, User, Clock } from 'lucide-react';
+import { Send, MessageSquare, User, Clock, BookOpen } from 'lucide-react';
 
 
 const formSchema = z.object({
@@ -38,6 +41,25 @@ type GuestbookMessage = {
   message: string;
   timestamp: Timestamp;
 };
+
+const MessageItem = ({ msg }: { msg: GuestbookMessage }) => (
+    <Card className="p-6 rounded-2xl bg-background/70 shadow-lg border">
+        <CardContent className="p-0">
+            <div className="flex justify-between items-center mb-4">
+              <p className="font-bold text-primary flex items-center gap-2">
+                <User size={14}/> 
+                {msg.name}
+              </p>
+              <p className="text-xs text-muted-foreground flex items-center gap-2">
+                <Clock size={12} />
+                {msg.timestamp ? formatDistanceToNow(msg.timestamp.toDate(), { addSuffix: true, locale: id }) : 'beberapa saat yang lalu'}
+              </p>
+            </div>
+            <p className="text-muted-foreground text-justify">{msg.message}</p>
+        </CardContent>
+    </Card>
+);
+
 
 export default function Guestbook() {
   const [messages, setMessages] = useState<GuestbookMessage[]>([]);
@@ -106,6 +128,8 @@ export default function Guestbook() {
     }
   }
 
+  const hasMoreMessages = messages.length > 3;
+
   return (
     <ScrollRevealWrapper id="guestbook" className="py-32 bg-secondary/50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -162,28 +186,46 @@ export default function Guestbook() {
           </CardContent>
         </Card>
 
-        <div className="mt-16 space-y-6">
-            <h4 className='text-2xl font-bold flex items-center gap-3 text-foreground'>
+        <div className="mt-16">
+            <h4 className='text-2xl font-bold flex items-center gap-3 text-foreground mb-6'>
                 <MessageSquare />
                 <span>Pesan dari Rekan-Rekan</span>
             </h4>
-            {messages.map((msg) => (
-                <Card key={msg.id} className="p-6 rounded-2xl bg-background/70 shadow-lg border">
-                    <CardContent className="p-0">
-                        <div className="flex justify-between items-center mb-4">
-                          <p className="font-bold text-primary flex items-center gap-2">
-                            <User size={14}/> 
-                            {msg.name}
-                          </p>
-                          <p className="text-xs text-muted-foreground flex items-center gap-2">
-                            <Clock size={12} />
-                            {msg.timestamp ? formatDistanceToNow(msg.timestamp.toDate(), { addSuffix: true, locale: id }) : 'beberapa saat yang lalu'}
-                          </p>
-                        </div>
-                        <p className="text-muted-foreground text-justify">{msg.message}</p>
-                    </CardContent>
-                </Card>
-            ))}
+            <div className='relative'>
+              <div className="space-y-6">
+                  {messages.slice(0, 3).map((msg) => (
+                      <MessageItem key={msg.id} msg={msg} />
+                  ))}
+              </div>
+
+              {hasMoreMessages && (
+                <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-secondary/50 to-transparent pointer-events-none" />
+              )}
+            </div>
+
+            {hasMoreMessages && (
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" className="w-full mt-8 rounded-xl font-bold">
+                    <BookOpen className="mr-2 h-4 w-4" />
+                    Lihat Semua {messages.length} Pesan
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl w-[calc(100%-2rem)] h-[80vh] flex flex-col p-0">
+                  <DialogHeader className='p-6 pb-4'>
+                    <DialogTitle className='flex items-center gap-3'><MessageSquare/> Semua Pesan ({messages.length})</DialogTitle>
+                  </DialogHeader>
+                  <ScrollArea className="flex-grow px-6">
+                    <div className="space-y-4 pb-6">
+                      {messages.map((msg) => (
+                        <MessageItem key={msg.id} msg={msg} />
+                      ))}
+                    </div>
+                  </ScrollArea>
+                </DialogContent>
+              </Dialog>
+            )}
+
             {messages.length === 0 && (
                 <p className='text-center text-muted-foreground py-10'>Belum ada pesan. Jadilah yang pertama!</p>
             )}

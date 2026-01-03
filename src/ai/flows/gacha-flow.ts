@@ -17,6 +17,10 @@ const GachaPrizeOutputSchema = z.object({
 });
 export type GachaPrizeOutput = z.infer<typeof GachaPrizeOutputSchema>;
 
+const GachaInputSchema = z.object({
+  userId: z.string().describe("A unique anonymous identifier for the user."),
+});
+
 const gachaPrizePrompt = ai.definePrompt({
   name: 'gachaPrizePrompt',
   output: { schema: GachaPrizeOutputSchema },
@@ -54,30 +58,40 @@ Example Output (for Ramalan Jodoh):
 const generateGachaPrizeFlow = ai.defineFlow(
   {
     name: 'generateGachaPrizeFlow',
+    inputSchema: GachaInputSchema,
     outputSchema: z.object({
-      prize: GachaPrizeOutputSchema,
-      imageUrl: z.string().describe("A URL of the generated image."),
+      prize: GachaPrizeOutputSchema.optional(),
+      imageUrl: z.string().describe("A URL of the generated image.").optional(),
+      error: z.string().optional(),
     }),
   },
-  async () => {
-    const { output: prize } = await gachaPrizePrompt();
-    if (!prize) {
-        throw new Error('Failed to generate gacha prize text.');
+  async ({ userId }) => {
+    try {
+        const { output: prize } = await gachaPrizePrompt();
+        if (!prize) {
+            throw new Error('Failed to generate gacha prize text.');
+        }
+
+        const seed = prize.title.replace(/\s+/g, '-').toLowerCase();
+        const imageUrl = `https://picsum.photos/seed/${seed}/600/400`;
+        
+        return {
+          prize,
+          imageUrl,
+        };
+
+    } catch (e: any) {
+      console.error("Error in gacha flow:", e);
+      if (process.env.NODE_ENV === 'development') {
+        throw e;
+      }
+      // This will be caught by the client and displayed
+      throw new Error("Mesin kejutan sedang sibuk atau kehabisan energi. Silakan coba lagi beberapa saat lagi.");
     }
-
-    // Use a placeholder image service instead of a generative model to avoid billing issues.
-    // Use the prize title as a seed for a unique image.
-    const seed = prize.title.replace(/\s+/g, '-').toLowerCase();
-    const imageUrl = `https://picsum.photos/seed/${seed}/600/400`;
-
-    return {
-      prize,
-      imageUrl: imageUrl,
-    };
   }
 );
 
 
-export async function generateGachaPrize(): Promise<z.infer<typeof generateGachaPrizeFlow.outputSchema>> {
-    return generateGachaPrizeFlow();
+export async function generateGachaPrize(input: z.infer<typeof GachaInputSchema>): Promise<z.infer<typeof generateGachaPrizeFlow.outputSchema>> {
+    return generateGachaPrizeFlow(input);
 }
