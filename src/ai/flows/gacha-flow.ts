@@ -58,11 +58,21 @@ Example "Super Epic" Output (for Nasihat Bijak):
 });
 
 
-// Helper function to get a random offline prize
-const getRandomOfflinePrize = (): GachaPrizeOutput => {
-  const randomIndex = Math.floor(Math.random() * offlinePrizes.length);
-  return offlinePrizes[randomIndex];
+// Helper function to get a random offline prize by rarity
+const getRandomOfflinePrize = (rarity: 'Common' | 'Rare' | 'Epic'): GachaPrizeOutput => {
+  const filteredPrizes = offlinePrizes.filter(p => p.rarity === rarity);
+  const randomIndex = Math.floor(Math.random() * filteredPrizes.length);
+  return filteredPrizes[randomIndex];
 };
+
+const determineRarity = (): 'Common' | 'Rare' | 'Epic' | 'Super Epic' => {
+    const rand = Math.random();
+    if (rand < 0.10) return 'Super Epic'; // 10% chance
+    if (rand < 0.30) return 'Epic';       // 20% chance (0.10 + 0.20)
+    if (rand < 0.60) return 'Rare';       // 30% chance (0.30 + 0.30)
+    return 'Common';                     // 40% chance
+};
+
 
 const generateGachaPrizeFlow = ai.defineFlow(
   {
@@ -76,44 +86,41 @@ const generateGachaPrizeFlow = ai.defineFlow(
     }),
   },
   async ({ userId }) => {
-    // 25% chance to try and get a prize from the AI
-    const shouldUseAI = Math.random() < 0.25;
+    const rarity = determineRarity();
     let prize: GachaPrizeOutput | null = null;
     let isAiGenerated = false;
-    let imageUrl: string | undefined = '';
+    
+    console.log(`Rarity determined: ${rarity}`);
 
-    if (shouldUseAI) {
-      console.log('Attempting to generate prize with AI...');
+    if (rarity === 'Super Epic') {
+      console.log('Attempting to generate Super Epic prize with AI...');
       try {
         const { output: aiPrize } = await gachaPrizePrompt();
         if (aiPrize) {
-          // Add rarity to the AI-generated prize
           prize = { ...aiPrize, rarity: 'Super Epic' };
           isAiGenerated = true;
           console.log('AI prize generated successfully.');
-          
-          const seed = prize.title.replace(/\s+/g, '-').toLowerCase();
-          imageUrl = `https://picsum.photos/seed/${seed}/600/400`;
-
         } else {
-           console.log('AI failed to generate a prize, falling back to offline prize.');
+           console.log('AI failed to generate a prize, falling back to offline Epic prize.');
+           prize = getRandomOfflinePrize('Epic'); // Fallback to Epic
         }
       } catch (e: any) {
-        console.warn("AI prize generation failed, falling back to offline prize. Error:", e.message);
+        console.warn("AI prize generation failed, falling back to offline Epic prize. Error:", e.message);
+        prize = getRandomOfflinePrize('Epic'); // Fallback to Epic
       }
-    }
-
-    // If AI was not used, or if it failed, get an offline prize.
-    if (!prize) {
-        prize = getRandomOfflinePrize();
-        isAiGenerated = false;
-        const seed = prize.title.replace(/\s+/g, '-').toLowerCase();
-        imageUrl = `https://picsum.photos/seed/${seed}/600/400`;
+    } else {
+      // Get an offline prize based on the determined rarity
+      console.log(`Getting offline prize for rarity: ${rarity}`);
+      prize = getRandomOfflinePrize(rarity);
     }
     
     if (!prize) {
       return { error: 'Gagal menghasilkan hadiah dari sumber manapun.' };
     }
+    
+    // Generate image URL from prize title
+    const seed = prize.title.replace(/\s+/g, '-').toLowerCase();
+    const imageUrl = `https://picsum.photos/seed/${seed}/600/400`;
     
     return {
       prize,

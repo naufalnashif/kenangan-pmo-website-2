@@ -454,5 +454,68 @@ export const offlinePrizes: GachaPrizeOutput[] = [
     text: "Mengubah kata 'Anjing' menjadi 'Siap Pak' secara otomatis saat mengirim pesan ke Bos. Efek samping: Jarang digunakan untuk mengumpat.",
     imagePrompt: "A mechanical keyboard with keys glowing in soft white light, clean minimalist setup",
     rarity: "Rare"
+  },
+  {
+    category: "Barang Ajaib",
+    title: "Pintu Kemana Saja (Khusus Kasur)",
+    text: "Satu langkah langsung sampai di kasur empuk, tidak peduli seberapa jauh kamu sedang berada.",
+    imagePrompt: "A miniature pink door floating above a soft pillow, ethereal glow",
+    rarity: "Epic"
+  },
+  {
+    category: "Barang Ajaib",
+    title: "Remote 'Mute' Tetangga",
+    text: "Bisa mematikan suara sound system hajatan atau suara motor bising dalam sekejap.",
+    imagePrompt: "A golden remote control with a giant ruby 'MUTE' button, magical sparks",
+    rarity: "Epic"
+  },
+  {
+    category: "Barang Ajaib",
+    title: "Kartu 'Skip' Antrean",
+    text: "Membuatmu tiba-tiba berada di urutan paling depan saat antre seblak atau isi bensin.",
+    imagePrompt: "A glowing holographic card with a fast-forward icon, elegant design",
+    rarity: "Epic"
+  },
+  {
+    category: "Barang Ajaib",
+    title: "Kloningan Rapat Virtual",
+    text: "Menciptakan proyeksi dirimu yang selalu mengangguk dan terlihat menyimak saat Zoom, padahal kamu sedang tidur.",
+    imagePrompt: "A blue holographic projection of a person wearing a suit, digital particles",
+    rarity: "Epic"
+  },
+  {
+    category: "Barang Ajaib",
+    title: "Dompet Re-generasi Saldo",
+    text: "Setiap kali uang dikeluarkan, akan muncul uang receh baru secara otomatis. Tidak bikin kaya, tapi tidak pernah kosong.",
+    imagePrompt: "A leather wallet overflowing with glowing gold coins and stardust",
+    rarity: "Epic"
+  },
+  {
+    category: "Barang Ajaib",
+    title: "Sepatu Lari dari Kenyataan",
+    text: "Meningkatkan kecepatan lari hingga 200% saat melihat tumpukan cucian atau piring kotor.",
+    imagePrompt: "Sport shoes with small wings on the ankles, glowing blue trails",
+    rarity: "Rare"
+  },
+  {
+    category: "Barang Ajaib",
+    title: "Kacamata Filter 'Hater'",
+    text: "Mengubah komentar negatif di internet menjadi suara kicauan burung yang merdu.",
+    imagePrompt: "Steampunk glasses with pink lenses, showing floating music notes",
+    rarity: "Rare"
+  },
+  {
+    category: "Survival",
+    title: "Helm Anti-Tanya 'Kapan Nikah?'",
+    text: "Menciptakan zona kedap suara saat berada di acara keluarga atau kondangan.",
+    imagePrompt: "A sleek futuristic helmet with a 'MUTE' symbol glowing on the side",
+    rarity: "Rare"
+  },
+  {
+    category: "Barang Ajaib",
+    title: "Payung Anti-Mendung",
+    text: "Jika kamu membawa payung ini, hujan tidak akan berani turun di radius 5 meter darimu.",
+    imagePrompt: "A bright yellow umbrella with a small sun glowing inside its handle",
+    rarity: "Rare"
   }
 ];
