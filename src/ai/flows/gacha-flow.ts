@@ -69,7 +69,7 @@ const generateGachaPrizeFlow = ai.defineFlow(
     try {
         const { output: prize } = await gachaPrizePrompt();
         if (!prize) {
-            throw new Error('Failed to generate gacha prize text.');
+            return { error: 'Failed to generate gacha prize text.' };
         }
 
         const seed = prize.title.replace(/\s+/g, '-').toLowerCase();
@@ -83,10 +83,9 @@ const generateGachaPrizeFlow = ai.defineFlow(
     } catch (e: any) {
       console.error("Error in gacha flow:", e);
       if (process.env.NODE_ENV === 'development') {
-        throw e;
+        return { error: e.message || 'An unknown error occurred during development.' };
       }
-      // This will be caught by the client and displayed
-      throw new Error("Mesin kejutan sedang sibuk atau kehabisan energi. Silakan coba lagi beberapa saat lagi.");
+      return { error: "Mesin kejutan sedang sibuk atau kehabisan energi. Silakan coba lagi beberapa saat lagi." };
     }
   }
 );

@@ -68,6 +68,7 @@ export default function GachaButton() {
             description: response.error || 'Mesin kejutan sedang bermasalah.',
          });
          setIsOpen(false);
+         setIsLoading(false); // Make sure to stop loading
          return;
       }
       
@@ -78,7 +79,7 @@ export default function GachaButton() {
       toast({
         variant: 'destructive',
         title: 'Gagal Mendapatkan Hadiah',
-        description: error.message || 'Mesin kejutan sedang sibuk. Silakan coba lagi beberapa saat lagi.',
+        description: error.message || 'Terjadi kesalahan pada aplikasi. Silakan coba lagi.',
       });
       setIsOpen(false);
     } finally {
