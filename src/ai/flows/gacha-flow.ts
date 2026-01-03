@@ -1,13 +1,14 @@
 'use server';
 /**
- * @fileOverview A Gacha AI agent that generates a random prize.
+ * @fileOverview A Gacha AI agent that generates a random prize, with a fallback to offline prizes.
  *
  * - generateGachaPrize - A function that handles the gacha prize generation process.
- * - GachaPrizeOutput - The return type for the generateGachaPrize function.
+ * - GachaPrizeOutput - The return type for the prize object.
  */
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
+import { offlinePrizes } from '@/lib/offline-prizes';
 
 const GachaPrizeOutputSchema = z.object({
   category: z.string().describe('The category of the prize (e.g., "Pantun Lucu", "Ramalan Jodoh", "Tebak-tebakan", "Barang Virtual").'),
@@ -55,6 +56,13 @@ Example Output (for Ramalan Jodoh):
 `,
 });
 
+
+// Helper function to get a random offline prize
+const getRandomOfflinePrize = (): GachaPrizeOutput => {
+  const randomIndex = Math.floor(Math.random() * offlinePrizes.length);
+  return offlinePrizes[randomIndex];
+};
+
 const generateGachaPrizeFlow = ai.defineFlow(
   {
     name: 'generateGachaPrizeFlow',
@@ -63,30 +71,55 @@ const generateGachaPrizeFlow = ai.defineFlow(
       prize: GachaPrizeOutputSchema.optional(),
       imageUrl: z.string().describe("A URL of the generated image.").optional(),
       error: z.string().optional(),
+      isAiGenerated: z.boolean().optional(),
     }),
   },
   async ({ userId }) => {
-    try {
-        const { output: prize } = await gachaPrizePrompt();
-        if (!prize) {
-            return { error: 'Failed to generate gacha prize text.' };
+    // 25% chance to try and get a prize from the AI
+    const shouldUseAI = Math.random() < 0.25;
+    let prize: GachaPrizeOutput | null = null;
+    let isAiGenerated = false;
+    let imageUrl: string | undefined = '';
+
+    if (shouldUseAI) {
+      console.log('Attempting to generate prize with AI...');
+      try {
+        const { output: aiPrize } = await gachaPrizePrompt();
+        if (aiPrize) {
+          prize = aiPrize;
+          isAiGenerated = true;
+          console.log('AI prize generated successfully.');
+          
+          // Use picsum for AI-generated prizes as well, to avoid costs and potential errors.
+          const seed = prize.title.replace(/\s+/g, '-').toLowerCase();
+          imageUrl = `https://picsum.photos/seed/${seed}/600/400`;
+
+        } else {
+           console.log('AI failed to generate a prize, falling back to offline prize.');
         }
-
-        const seed = prize.title.replace(/\s+/g, '-').toLowerCase();
-        const imageUrl = `https://picsum.photos/seed/${seed}/600/400`;
-        
-        return {
-          prize,
-          imageUrl,
-        };
-
-    } catch (e: any) {
-      console.error("Error in gacha flow:", e);
-      if (process.env.NODE_ENV === 'development') {
-        return { error: e.message || 'An unknown error occurred during development.' };
+      } catch (e: any) {
+        console.warn("AI prize generation failed, falling back to offline prize. Error:", e.message);
+        // If AI fails for any reason (e.g., rate limit), we just fall through and use an offline prize.
       }
-      return { error: "Mesin kejutan sedang sibuk atau kehabisan energi. Silakan coba lagi beberapa saat lagi." };
     }
+
+    // If AI was not used, or if it failed, get an offline prize.
+    if (!prize) {
+        prize = getRandomOfflinePrize();
+        isAiGenerated = false;
+        const seed = prize.title.replace(/\s+/g, '-').toLowerCase();
+        imageUrl = `https://picsum.photos/seed/${seed}/600/400`;
+    }
+    
+    if (!prize) {
+      return { error: 'Gagal menghasilkan hadiah dari sumber manapun.' };
+    }
+    
+    return {
+      prize,
+      imageUrl,
+      isAiGenerated,
+    };
   }
 );
 
