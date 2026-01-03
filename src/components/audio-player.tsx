@@ -1,23 +1,32 @@
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
-import { Play, Pause, Music } from 'lucide-react';
+import { Play, Pause, ListMusic, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useSeasonalEffects } from '@/hooks/use-seasonal-effects';
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
 
-const musicTracks = {
-  default: "https://www.bensound.com/bensound-music/bensound-memories.mp3",
-  snow: "https://www.bensound.com/bensound-music/bensound-betterdays.mp3", // Cheerful, warm
-  fireworks: "https://www.bensound.com/bensound-music/bensound-creativeminds.mp3", // Optimistic, celebratory
-  lanterns: "https://www.bensound.com/bensound-music/bensound-relaxing.mp3" // Calm, peaceful
-};
+const musicTracks = [
+  { title: "Memories", url: "https://www.bensound.com/bensound-music/bensound-memories.mp3" },
+  { title: "Creative Minds", url: "https://www.bensound.com/bensound-music/bensound-creativeminds.mp3" },
+  { title: "A New Beginning", url: "https://www.bensound.com/bensound-music/bensound-anewbeginning.mp3" },
+  { title: "Better Days", url: "https://www.bensound.com/bensound-music/bensound-betterdays.mp3" },
+  { title: "Relaxing", url: "https://www.bensound.com/bensound-music/bensound-relaxing.mp3" }
+];
+
 
 export default function AudioPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const { activeEffect } = useSeasonalEffects();
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
 
-  const activeTrack = (activeEffect && musicTracks[activeEffect]) ? musicTracks[activeEffect] : musicTracks.default;
+  const activeTrack = musicTracks[currentTrackIndex];
 
   const togglePlayPause = () => {
     if (!audioRef.current) return;
@@ -26,38 +35,69 @@ export default function AudioPlayer() {
       audioRef.current.pause();
       setIsPlaying(false);
     } else {
-      // The play() method returns a Promise.
-      // We can use it to handle autoplay policies.
       audioRef.current.play().then(() => {
         setIsPlaying(true);
       }).catch(error => {
-        // Autoplay was prevented.
+        // Handle cases where autoplay is blocked
         console.error("Audio playback was prevented by the browser:", error);
         setIsPlaying(false);
       });
     }
   };
   
-  // Effect to handle source changes
+  const handleTrackChange = (index: number) => {
+    if (index === currentTrackIndex) return;
+
+    setCurrentTrackIndex(index);
+    // isPlaying state will determine if it plays in the useEffect below
+  };
+  
+  // Effect to handle track changes and autoplay
   useEffect(() => {
     if (audioRef.current) {
+        audioRef.current.src = musicTracks[currentTrackIndex].url;
         if (isPlaying) {
-            // If it was already playing, we want the new track to start playing.
-            // We pause, set new src, and then play.
-            audioRef.current.pause();
-            audioRef.current.src = activeTrack;
-            audioRef.current.load(); // It's good practice to load the new source
-            audioRef.current.play().catch(e => console.error("Failed to play new track:", e));
-        } else {
-            // If it wasn't playing, just update the source.
-            audioRef.current.src = activeTrack;
+            // The play() request returns a promise. We'll handle it to avoid uncaught promise errors.
+            const playPromise = audioRef.current.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.error("Failed to play new track automatically:", error);
+                    // If play fails, we should probably update the state to reflect that.
+                    setIsPlaying(false);
+                });
+            }
         }
     }
-  }, [activeTrack]); // This effect runs when activeTrack changes
+  }, [currentTrackIndex]);
+
 
   return (
     <div className="fixed bottom-6 right-6 z-[60]">
-      <div className="bg-background/80 dark:bg-slate-800/80 backdrop-blur-md p-2 rounded-full shadow-2xl border flex items-center space-x-3 transition-all hover:scale-105">
+      <div className="bg-background/80 dark:bg-slate-800/80 backdrop-blur-md p-2 rounded-full shadow-2xl border flex items-center space-x-2 transition-all hover:scale-105">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              id="playlistToggle"
+              variant="ghost"
+              size="icon"
+              className="w-10 h-10 rounded-full"
+            >
+              <ListMusic className="h-5 w-5" />
+              <span className="sr-only">Buka Playlist</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className='w-56 mb-2' side="top" align="end">
+            <DropdownMenuLabel>Pilih Lagu</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            {musicTracks.map((track, index) => (
+              <DropdownMenuItem key={index} onClick={() => handleTrackChange(index)}>
+                {currentTrackIndex === index && <Check className="h-4 w-4 mr-2" />}
+                <span className={currentTrackIndex !== index ? 'ml-6' : ''}>{track.title}</span>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+
         <Button
           id="musicToggle"
           onClick={togglePlayPause}
@@ -67,17 +107,18 @@ export default function AudioPlayer() {
           {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
           <span className="sr-only">Toggle Music</span>
         </Button>
-        <span className="text-[10px] font-bold pr-3 text-muted-foreground uppercase tracking-widest hidden sm:flex items-center gap-2">
-            <Music size={12}/>
-            Atmosphere
-        </span>
       </div>
-      {/* We set the initial source here and change it via useEffect */}
       <audio
         ref={audioRef}
         id="bgMusic"
         loop
-        src={activeTrack}
+        src={activeTrack.url}
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+        onEnded={() => {
+            const nextIndex = (currentTrackIndex + 1) % musicTracks.length;
+            handleTrackChange(nextIndex);
+        }}
       />
     </div>
   );
