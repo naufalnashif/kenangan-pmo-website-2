@@ -15,6 +15,7 @@ const GachaPrizeOutputSchema = z.object({
   title: z.string().describe('The title of the prize.'),
   text: z.string().describe('The descriptive text of the prize.'),
   imagePrompt: z.string().describe('A simple DALL-E 2 prompt to generate an image for the prize, in English. e.g., "A magical glowing potion bottle, digital art".'),
+  rarity: z.enum(['Common', 'Rare', 'Epic', 'Super Epic']).describe('The rarity of the prize.'),
 });
 export type GachaPrizeOutput = z.infer<typeof GachaPrizeOutputSchema>;
 
@@ -24,34 +25,34 @@ const GachaInputSchema = z.object({
 
 const gachaPrizePrompt = ai.definePrompt({
   name: 'gachaPrizePrompt',
-  output: { schema: GachaPrizeOutputSchema },
-  prompt: `You are a fun and creative Gacha machine spirit for a farewell website. Generate a random, lighthearted, and positive "prize" for the user. The prize must be in Bahasa Indonesia.
+  output: { schema: GachaPrizeOutputSchema.omit({ rarity: true }) }, // AI doesn't generate rarity
+  prompt: `You are a fun, creative, and slightly dramatic Gacha machine spirit for a farewell website. Your task is to generate a truly unique, creative, and high-quality "prize" for the user that feels "Super Epic". The prize must be in Bahasa Indonesia.
 
-The prize can be one of the following categories:
-- Pantun Lucu: A funny four-line poem.
-- Ramalan Baik: A humorous and positive general fortune-telling prediction.
-- Nasihat Bijak: A wise and uplifting piece of advice.
-- Barang Virtual: A whimsical, imaginary virtual item with a funny description.
-- Tebak-tebakan: A funny riddle and its answer. Format as "Tebakan: [riddle] Jawaban: [answer]".
-- Ramalan Jodoh: A lighthearted and funny love life prediction.
-- Ramalan Hari Ini: A positive and humorous prediction for the user's day.
+The prize must be one of the following categories, but make it sound legendary:
+- Pantun Lucu: A hilarious and clever four-line poem.
+- Ramalan Baik: A humorous and surprisingly deep positive fortune-telling prediction.
+- Nasihat Bijak: A wise and profoundly uplifting piece of advice.
+- Barang Virtual: A whimsical, imaginary virtual item with a funny, epic description.
+- Tebak-tebakan: A very clever riddle and its answer. Format as "Tebakan: [riddle] Jawaban: [answer]".
+- Ramalan Jodoh: A lighthearted, funny, and specific love life prediction.
+- Ramalan Hari Ini: A positive and humorous prediction for the user's day that is unexpectedly accurate.
 
-For the imagePrompt, create a simple, descriptive prompt in English suitable for an image generation model like DALL-E 2. Make it visual and artistic.
+For the imagePrompt, create a simple, but epic and descriptive prompt in English suitable for an image generation model. Make it visual, artistic, and worthy of a "Super Epic" prize.
 
-Example Output (for Tebak-tebakan):
+Example "Super Epic" Output (for Barang Virtual):
 {
-  "category": "Tebak-tebakan",
-  "title": "Tebakan Hewan",
-  "text": "Tebakan: Hewan apa yang paling kaya? Jawaban: Ber-uang.",
-  "imagePrompt": "A cute cartoon bear holding a bag of money, vibrant colors"
+  "category": "Barang Virtual",
+  "title": "Voucher Cuti Tak Terbatas",
+  "text": "Sebuah artefak legendaris yang konon bisa digunakan untuk cuti kapan saja, di dimensi mana saja. Efek samping: dikejar HR lintas realita.",
+  "imagePrompt": "A glowing golden ticket that says 'UNLIMITED LEAVE' radiating cosmic energy, fantasy digital art"
 }
 
-Example Output (for Ramalan Jodoh):
+Example "Super Epic" Output (for Nasihat Bijak):
 {
-  "category": "Ramalan Jodoh",
-  "title": "Prediksi Cinta Hari Ini",
-  "text": "Sepertinya hari ini kamu akan bertemu seseorang yang senyumnya semanis martabak keju. Jangan lupa sikat gigi!",
-  "imagePrompt": "Two cute cartoon characters smiling at each other with a giant sweet cake between them, romantic comedy style"
+  "category": "Nasihat Bijak",
+  "title": "Petuah dari Kucing Oren Galaksi",
+  "text": "Hiduplah seperti kucing oren antar-dimensi: berani, sedikit bar-bar, melanggar hukum fisika, dan selalu dicintai apapun yang terjadi.",
+  "imagePrompt": "An orange cat wearing a superhero cape, floating in a colorful galaxy, looking confident, epic cartoon style"
 }
 `,
 });
@@ -86,11 +87,11 @@ const generateGachaPrizeFlow = ai.defineFlow(
       try {
         const { output: aiPrize } = await gachaPrizePrompt();
         if (aiPrize) {
-          prize = aiPrize;
+          // Add rarity to the AI-generated prize
+          prize = { ...aiPrize, rarity: 'Super Epic' };
           isAiGenerated = true;
           console.log('AI prize generated successfully.');
           
-          // Use picsum for AI-generated prizes as well, to avoid costs and potential errors.
           const seed = prize.title.replace(/\s+/g, '-').toLowerCase();
           imageUrl = `https://picsum.photos/seed/${seed}/600/400`;
 
@@ -99,7 +100,6 @@ const generateGachaPrizeFlow = ai.defineFlow(
         }
       } catch (e: any) {
         console.warn("AI prize generation failed, falling back to offline prize. Error:", e.message);
-        // If AI fails for any reason (e.g., rate limit), we just fall through and use an offline prize.
       }
     }
 

@@ -19,8 +19,8 @@ export default function Header() {
     { href: '#home', label: 'Home' },
     { href: '#message', label: 'Pesan' },
     { href: '#portfolio', label: 'Karya' },
-    { href: '#guestbook', label: 'Ucapan' },
     { href: '#memories', label: 'Galeri' },
+    { href: '#guestbook', label: 'Ucapan' },
     { href: '#analytics', label: 'Analytics' },
   ];
 
