@@ -236,7 +236,9 @@ export default function GachaCollection() {
                         <Badge variant="secondary">{selectedPrize.prize.category}</Badge>
                     </div>
                     <h3 className="text-xl font-bold pt-2">{selectedPrize.prize.title}</h3>
-                    <p className="text-muted-foreground italic">"{selectedPrize.prize.text}"</p>
+                    <div className="max-h-[6rem] overflow-y-auto custom-scrollbar px-4">
+                      <p className="text-muted-foreground italic">"{selectedPrize.prize.text}"</p>
+                    </div>
                 </div>
               </div>
             </div>
