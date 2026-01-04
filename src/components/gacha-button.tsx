@@ -167,17 +167,17 @@ export default function GachaButton() {
       </div>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className={cn("w-[calc(100%-2rem)] sm:max-w-[425px] rounded-2xl transition-all duration-500", getDialogGlowClass())}>
-          <DialogHeader className="text-center items-center">
-            <DialogTitle className="text-2xl font-bold">
+        <DialogContent className={cn("w-[90vw] max-w-[340px] p-4 rounded-2xl transition-all duration-500", getDialogGlowClass())}>
+          <DialogHeader className="text-center items-center p-2">
+            <DialogTitle className="text-xl font-bold">
                 {isLoading ? 'Mengambil Hadiah...' : 'Selamat! Anda Mendapatkan...'}
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="text-xs">
                 {isLoading ? 'Mohon tunggu sebentar, mesin kejutan sedang bekerja.' : 'Sebuah hadiah virtual spesial untuk Anda.'}
             </DialogDescription>
           </DialogHeader>
 
-          <div className="py-4 space-y-6">
+          <div className="py-2 space-y-4">
             {isLoading && (
               <div className="flex flex-col items-center justify-center space-y-4 h-64">
                 <LoaderCircle className="w-12 h-12 animate-spin text-primary" />
@@ -185,14 +185,14 @@ export default function GachaButton() {
               </div>
             )}
             {result && (
-              <div className="flex flex-col items-center text-center space-y-4 animate-in fade-in-50 duration-500">
-                <div className="relative w-full max-w-[300px] aspect-[4/3] rounded-lg overflow-hidden border shadow-lg">
+              <div className="flex flex-col items-center text-center space-y-3 animate-in fade-in-50 duration-500">
+                <div className="relative w-full max-w-[280px] aspect-[4/3] rounded-lg overflow-hidden border shadow-lg">
                     <Image
                         src={result.imageUrl}
                         alt={result.prize.title}
                         fill
                         className="object-cover"
-                        sizes="(max-width: 640px) 90vw, 300px"
+                        sizes="(max-width: 640px) 90vw, 280px"
                     />
                     <div className="absolute top-2 right-2 flex flex-col items-end gap-2">
                         {result.isAiGenerated && (
@@ -203,14 +203,14 @@ export default function GachaButton() {
                         )}
                     </div>
                 </div>
-                <div className='w-full space-y-2'>
+                <div className='w-full space-y-1.5'>
                     <div className="flex gap-2 justify-center">
                         <RarityBadge rarity={result.prize.rarity} />
                         <Badge variant="secondary">{result.prize.category}</Badge>
                     </div>
-                    <h3 className="text-xl font-bold pt-2">{result.prize.title}</h3>
-                    <div className="max-h-[6rem] overflow-y-auto custom-scrollbar px-4">
-                      <p className="text-muted-foreground italic">"{result.prize.text}"</p>
+                    <h3 className="text-lg font-bold pt-1">{result.prize.title}</h3>
+                    <div className="max-h-[5rem] overflow-y-auto custom-scrollbar px-4">
+                      <p className="text-sm text-muted-foreground italic">"{result.prize.text}"</p>
                     </div>
                 </div>
               </div>

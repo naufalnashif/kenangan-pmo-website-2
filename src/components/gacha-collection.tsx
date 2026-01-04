@@ -201,25 +201,25 @@ export default function GachaCollection() {
       {/* Prize Detail Dialog */}
       <Dialog open={!!selectedPrize} onOpenChange={(open) => !open && setSelectedPrize(null)}>
         {selectedPrize && (
-          <DialogContent className={cn("w-[calc(100%-2rem)] sm:max-w-[425px] rounded-2xl transition-all duration-500", getDialogGlowClass(selectedPrize.prize.rarity))}>
-            <DialogHeader className="text-center items-center">
-              <DialogTitle className="text-2xl font-bold">
+          <DialogContent className={cn("w-[90vw] max-w-[340px] p-4 rounded-2xl transition-all duration-500", getDialogGlowClass(selectedPrize.prize.rarity))}>
+            <DialogHeader className="text-center items-center p-2">
+              <DialogTitle className="text-xl font-bold">
                   Detail Hadiah
               </DialogTitle>
-              <DialogDescription>
+              <DialogDescription className="text-xs">
                   Ini adalah salah satu hadiah dari koleksimu.
               </DialogDescription>
             </DialogHeader>
 
-            <div className="py-4 space-y-6">
-              <div className="flex flex-col items-center text-center space-y-4 animate-in fade-in-50 duration-500">
-                <div className="relative w-full max-w-[300px] aspect-[4/3] rounded-lg overflow-hidden border shadow-lg">
+            <div className="py-2 space-y-4">
+              <div className="flex flex-col items-center text-center space-y-3 animate-in fade-in-50 duration-500">
+                <div className="relative w-full max-w-[280px] aspect-[4/3] rounded-lg overflow-hidden border shadow-lg">
                     <Image
                         src={selectedPrize.imageUrl}
                         alt={selectedPrize.prize.title}
                         fill
                         className="object-cover"
-                        sizes="(max-width: 640px) 90vw, 300px"
+                        sizes="(max-width: 640px) 90vw, 280px"
                     />
                     <div className="absolute top-2 right-2 flex flex-col items-end gap-2">
                         {selectedPrize.isAiGenerated && (
@@ -230,14 +230,14 @@ export default function GachaCollection() {
                         )}
                     </div>
                 </div>
-                <div className='w-full space-y-2'>
+                <div className='w-full space-y-1.5'>
                     <div className="flex gap-2 justify-center">
                         <RarityBadge rarity={selectedPrize.prize.rarity} />
                         <Badge variant="secondary">{selectedPrize.prize.category}</Badge>
                     </div>
-                    <h3 className="text-xl font-bold pt-2">{selectedPrize.prize.title}</h3>
-                    <div className="max-h-[6rem] overflow-y-auto custom-scrollbar px-4">
-                      <p className="text-muted-foreground italic">"{selectedPrize.prize.text}"</p>
+                    <h3 className="text-lg font-bold pt-1">{selectedPrize.prize.title}</h3>
+                    <div className="max-h-[5rem] overflow-y-auto custom-scrollbar px-4">
+                      <p className="text-sm text-muted-foreground italic">"{selectedPrize.prize.text}"</p>
                     </div>
                 </div>
               </div>
