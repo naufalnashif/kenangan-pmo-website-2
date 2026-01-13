@@ -2,9 +2,9 @@ import { cn } from "@/lib/utils";
 
 export default function ScrollingBanner() {
   const bannerItems = [
-    "Terima Kasih PMO OJK Workstream Sistem Informasi",
-    "New Journey as Consultant",
-    "Follow on Instagram: @naufal.nashif",
+    "Terima Kasih PMO OJK",
+    "Workstream Sistem Informasi",
+    "Apresiasi atas Kolaborasi dan Perjalanan Profesional",
   ];
 
   // Duplicate items to ensure smooth infinite scroll

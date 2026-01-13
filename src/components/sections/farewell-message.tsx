@@ -91,7 +91,7 @@ export default function FarewellMessage({ guest }: FarewellMessageProps) {
               <div className="space-y-6 text-justify text-slate-600 dark:text-slate-300">
                 <p className="text-xl font-bold text-foreground mb-6">{personalGreeting}</p>
                 <p>{personalParagraph}</p>
-                <p>Sebagai langkah selanjutnya, saya akan berkarya di dunia konsultansi. Semoga semangat inovasi yang kita bangun di sini terus berkobar di hati rekan-rekan semua.</p>
+                <p>Perjalanan ini menjadi bagian penting dalam proses pembelajaran dan pertumbuhan saya. Ke depannya, saya akan melanjutkan langkah pada tantangan dan kesempatan baru. Semoga semangat inovasi, kebersamaan, dan profesionalisme yang telah kita bangun bersama dapat terus terjaga dan berkembang di hati rekan-rekan semua.</p>
                 <div className="my-10 p-6 md:p-8 bg-primary/10 rounded-3xl border-l-8 border-primary">
                     <p className='italic'>"Farewell is just a way to say we will miss the presence, but not the memories."</p>
                     <div className='mt-4 text-xs text-primary/80'>
